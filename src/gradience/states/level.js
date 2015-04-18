@@ -71,7 +71,7 @@ LevelState.prototype = {
             ['Sprite', {game: this.game, x: 10, y: 240, asset: 'player'}],
             ['Physics', this.game],
             ['Drag', 1500],
-            ['Velocity', {x: 500, y: 500}],
+            ['Velocity', {x: 0, y: 0, maxX: 500, maxY: 500}],
             ['ControlsArrows', 2000],
             ['CollideWorld']
         ]);
