@@ -13,6 +13,9 @@ var Environment = {
     Starfield: require('../environ/backdrop')
 };
 
+var Entities = {
+    Player: require('../ecs/entities/player')
+};
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -24,7 +27,7 @@ var LevelState = function() {};
 
 
 LevelState.prototype = {
-    
+
     init: function() {
 
         factory.initComponents(components);
@@ -40,12 +43,13 @@ LevelState.prototype = {
 
         // Bind controls to color mixer
         this.controls = {};
-        for(var k in KeyMap.colorToggles) {
+
+        for (var k in KeyMap.colorToggles) {
             console.log(k);
             this.controls['toggle' + k] = this.game.input.keyboard.addKey(KeyMap.colorToggles[k]);
             (function(color) {
                 self.controls['toggle' + color].onDown.add(function(key) {
-                    gameStatus.toggleColor(color); 
+                    gameStatus.toggleColor(color);
                 }, self);
             })(k);
         }
@@ -65,24 +69,21 @@ LevelState.prototype = {
     },
     create: function() {
 
-        this.rain = new Environment.Starfield(this.game);
+        console.log('LEVEL');
 
-        var player = factory.create([
-            ['Sprite', {game: this.game, x: 10, y: 240, asset: 'player'}],
-            ['Physics', this.game],
-            ['Drag', 1500],
-            ['Velocity', {x: 0, y: 0, maxX: 500, maxY: 500}],
-            ['ControlsArrows', 2000],
-            ['CollideWorld']
-        ]);
+        this.starfield = new Environment.Starfield(this.game);
+
+        this.player = Entities.Player.create(this.game);
 
         this.score.addAmount(0);
 
     },
     update: function() {
+
         ControlsSystem.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
+
     },
     render: function() {
 
