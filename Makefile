@@ -16,7 +16,7 @@ serve: node_modules
 	webpack-dev-server $(WEBPACK_OPTS)	
 
 watch: node_modules
-	webpack $(WEBPACK_OPTS)--watch
+	webpack $(WEBPACK_OPTS) --watch
 
 build: node_modules
 	webpack $(WEBPACK_OPTS)
@@ -26,6 +26,7 @@ setup: node_modules
 node_modules: package.json
 	npm cache clean;
 	$(SUDO) npm install -g webpack;
+	$(SUDO) npm install -g webpack-dev-server;
 	npm install;
 	touch $@
 
