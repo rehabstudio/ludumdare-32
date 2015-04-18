@@ -1,1 +1,2 @@
-console.log(Phaser);
+var Gradience = require('./gradience/main');
+var gradience = new Gradience();
