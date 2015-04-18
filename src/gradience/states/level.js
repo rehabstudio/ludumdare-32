@@ -1,5 +1,14 @@
+
+'use strict';
+
 var KeyMap = require('../config/keymap'),
     gameStatus = require('../status/gamestatus');
+
+var components = require('../ecs/components');
+var factory = require('../ecs/factory');
+
+var ControlsSystem = require('../ecs/systems/controls');
+
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -7,16 +16,15 @@ var UI = {
 };
 
 
-function _checkColorKeys() {
+var LevelState = function() {};
 
-
-}
-
-
-var LevelState = function(){};
 
 LevelState.prototype = {
-    init: function(args){
+    
+    init: function() {
+
+        factory.initComponents(components);
+        ControlsSystem.init(this.game);
 
         var self = this;
 
@@ -35,29 +43,42 @@ LevelState.prototype = {
                 }, self);
             })(k);
         }
-        
-    },
-    preload: function(){
 
     },
-    create: function(){
+    preload: function() {
+        this.load.spritesheet(
+            'player',
+            'assets/sprites/player.png',
+            110, 100
+        );
+    },
+    create: function() {
+        var player = factory.create();
+        player.addComponent(
+            'Sprite',
+            {
+                game: this.game,
+                x: 10,
+                y: 240,
+                asset: 'player'
+            }
+        );
+        player.addComponent('ControlsArrows');
 
         console.log("LEVEL!");
         this.score.addAmount(0);
 
     },
     update: function(){
-
+        ControlsSystem.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
+    },
+    render: function() {
 
     },
-    render: function(){
-
-    },
-    shutdown: function(){
-        
-    },
+    shutdown: function() {
+    }
 };
 
 module.exports = LevelState;
