@@ -32,10 +32,7 @@ function createPlayerShot(game, x, y) {
         ['Velocity', {x: 600, y: 0 }],
     ]);
 
-    console.log('COLOR', gameStatus.activeColor, gameStatus.activeTintColor);
     playerShot.sprite.tint = gameStatus.activeTintColor;
-
-    console.log('PLAYERSHOT', playerShot);
     return playerShot;
 }
 
