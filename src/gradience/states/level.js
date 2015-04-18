@@ -9,6 +9,10 @@ var factory = require('../ecs/factory');
 
 var ControlsSystem = require('../ecs/systems/controls');
 
+var Environment = {
+    Starfield: require('../environ/backdrop')
+};
+
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -55,6 +59,9 @@ LevelState.prototype = {
         );
     },
     create: function() {
+
+        this.rain = new Environment.Starfield(this.game);
+
         var player = factory.create();
         player.addComponent(
             'Sprite',
@@ -71,7 +78,7 @@ LevelState.prototype = {
         player.addComponent('ControlsArrows', 2000);
         player.addComponent('CollideWorld');
 
-        console.log("LEVEL!");
+        
         this.score.addAmount(0);
 
     },
