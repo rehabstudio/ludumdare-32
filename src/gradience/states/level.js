@@ -70,6 +70,11 @@ LevelState.prototype = {
             'assets/sprites/enemy.png',
             100, 100
         );
+        this.load.audio(
+            'music',
+            ['assets/audio/backing-bell.mp3',
+             'assets/audio/backing-bell.opus']
+        );
     },
     create: function() {
 
@@ -78,6 +83,9 @@ LevelState.prototype = {
         this.starfield = new Environment.Starfield(this.game);
 
         this.player = Entities.Player.create(this.game);
+
+        this.music = this.add.audio('music');
+        this.music.loop = true;
 
         this.timer = this.game.time.create();
         this.timer.start();
@@ -103,6 +111,7 @@ LevelState.prototype = {
         this.timer.loop(4500, createEnemyWave, this);
 
         this.score.addAmount(0);
+        this.music.play();
 
     },
     update: function() {
