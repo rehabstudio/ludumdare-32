@@ -11,6 +11,7 @@ BootState.prototype = {
         // this.scale.maxHeight = 1080;
     },
     preload: function(){
+        this.load.audio('titleMusic', [{uri: "data:assets/audio/intro.opus", type: 'opus'}, 'assets/audio/intro.wav']);
     },
     create: function(){
         this.game.state.start('title');

@@ -19,6 +19,11 @@ function _waitForStart() {
     }
 };
 
+function _playIntroMusic() {
+    this.intromusic = this.add.audio('titleMusic');
+    this.intromusic.play();
+}
+
 TitleState.prototype = {
     init: function(args){
     },
@@ -27,6 +32,7 @@ TitleState.prototype = {
     create: function(){
         console.log('TITLE');
 
+        _playIntroMusic.call(this);
         _displayStartText.call(this);
 
     },
