@@ -47,6 +47,7 @@ var Components = {
         this._sine.base = this.sprite[this._sine.axis];
         this._sine.start = Date.now();
         this._sine.frequency = 1000 / this._sine.frequency;
+        this._sine.phase = this._sine.phase * this._sine.frequency;
     }
 };
 

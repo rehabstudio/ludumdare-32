@@ -86,12 +86,12 @@ LevelState.prototype = {
             Entities.Enemy.createWave(
                 this.game,
                 {
-                    count: 20,
-                    delay: 500,
+                    count: 10,
+                    delay: 300,
                     x: 900,
-                    y: Math.floor(Math.random() * 400) + 40,
-                    speed: -100,
-                    amplitude: 60,
+                    y: Math.floor(Math.random() * 480) - 50,
+                    speed: -200,
+                    amplitude: Math.random() * 50 + 10,
                     frequency: 0.01,
                     phase: (Math.random() * 2) - 1,
                     asset: 'enemy'
@@ -100,7 +100,7 @@ LevelState.prototype = {
         }
 
         createEnemyWave.call(this);
-        this.timer.loop(2000, createEnemyWave, this);
+        this.timer.loop(4500, createEnemyWave, this);
 
         this.score.addAmount(0);
 
