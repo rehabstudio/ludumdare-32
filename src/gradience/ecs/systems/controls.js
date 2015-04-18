@@ -20,20 +20,22 @@ var ControlsSystem = (function() {
                 return;
             }
 
+            entity.sprite.body.acceleration.set(0);
+
             if (keys.up.isDown) {
-                entity.sprite.y -= entity.moveSpeed;
+                entity.sprite.body.acceleration.add(0, -entity.moveSpeed);
             }
 
             if (keys.down.isDown) {
-                entity.sprite.y += entity.moveSpeed;
+                entity.sprite.body.acceleration.add(0, entity.moveSpeed);
             }
 
             if (keys.left.isDown) {
-                entity.sprite.x -= entity.moveSpeed;
+                entity.sprite.body.acceleration.add(-entity.moveSpeed, 0);
             }
 
             if (keys.right.isDown) {
-                entity.sprite.x += entity.moveSpeed;
+                entity.sprite.body.acceleration.add(entity.moveSpeed, 0);
             }
         });
     }
