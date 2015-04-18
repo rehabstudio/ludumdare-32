@@ -23,13 +23,19 @@ var Components = {
         }
         game.physics.enable(this.sprite, PHYSICS);
     },
+    CollideWorld: function(game) {
+        if (!this.has('Sprite')) {
+            return;
+        }
+        this.sprite.body.collideWorldBounds = true;
+    },
     Drag: function(drag) {
         if (!this.has('Sprite')) {
             return;
         }
         this.sprite.body.drag.set(drag);
     },
-    Velocity: function(maxVelocity){
+    Velocity: function(maxVelocity) {
         if (!this.has('Sprite')) {
             return;
         }

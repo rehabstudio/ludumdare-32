@@ -66,10 +66,10 @@ LevelState.prototype = {
             }
         );
         player.addComponent('Physics', this.game);
-        player.addComponent('Drag', 1000);
+        player.addComponent('Drag', 1500);
         player.addComponent('Velocity', { x: 500, y: 500});
         player.addComponent('ControlsArrows', 2000);
-        player.sprite.body.collideWorldBounds = true
+        player.addComponent('CollideWorld');
 
         console.log("LEVEL!");
         this.score.addAmount(0);
