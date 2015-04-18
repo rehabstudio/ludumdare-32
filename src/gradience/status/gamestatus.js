@@ -8,8 +8,12 @@ var gameStatus = {};
 // Active status of the three color wells.
 gameStatus.colorStates = {
     r: false,
-    g: false,
+    g: true,
     b: false
 };
+
+// Currnt active mixed color
+gameStatus.activeColor = '#ffffff';
+
 
 module.exports = gameStatus;
