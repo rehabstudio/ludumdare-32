@@ -36,6 +36,8 @@ LevelState.prototype = {
         this.score = new UI.Score(this);
         this.weaponUI = new UI.Weapon(this);
 
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
         // Bind controls to color mixer
         this.controls = {};
         for(var k in KeyMap.colorToggles) {
@@ -70,13 +72,17 @@ LevelState.prototype = {
                 asset: 'player'
             }
         );
-        player.addComponent('ControlsArrows');
+        player.addComponent('Physics', this.game);
+        player.addComponent('Drag', 1500);
+        player.addComponent('Velocity', { x: 500, y: 500});
+        player.addComponent('ControlsArrows', 2000);
+        player.addComponent('CollideWorld');
 
         
         this.score.addAmount(0);
 
     },
-    update: function(){
+    update: function() {
         ControlsSystem.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();

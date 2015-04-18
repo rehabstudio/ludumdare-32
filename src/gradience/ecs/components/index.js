@@ -6,6 +6,9 @@
  * TODO: come up with something nicer than no-ops
  * for components without params
  **/
+
+var PHYSICS = Phaser.Physics.ARCADE;
+
 var Components = {
 
     ControlsArrows: function(moveSpeed) {
@@ -14,18 +17,29 @@ var Components = {
     Sprite: function(params) {
         this.sprite = params.game.add.sprite(params.x, params.y, params.asset);
     },
-    StageBounce: function(damping) {
-        this.damping = damping || 0;
-    },
-    StageConstrain: null,
-    StageWrap: null,
-    Velocity: function(vels) {
-        if (vels === undefined) {
-            vels = { vx: 0, vy: 0, vmax: 10 };
+    Physics: function(game) {
+        if (!this.has('Sprite')) {
+            return;
         }
-        this.vx = vels.vx;
-        this.vy = vels.vy;
-        this.vmax = vels.max;
+        game.physics.enable(this.sprite, PHYSICS);
+    },
+    CollideWorld: function(game) {
+        if (!this.has('Sprite')) {
+            return;
+        }
+        this.sprite.body.collideWorldBounds = true;
+    },
+    Drag: function(drag) {
+        if (!this.has('Sprite')) {
+            return;
+        }
+        this.sprite.body.drag.set(drag);
+    },
+    Velocity: function(maxVelocity) {
+        if (!this.has('Sprite')) {
+            return;
+        }
+        this.sprite.body.maxVelocity.set(maxVelocity.x, maxVelocity.y);
     }
 };
 
