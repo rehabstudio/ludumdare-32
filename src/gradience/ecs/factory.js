@@ -9,11 +9,18 @@ var EntityFactory = (function() {
         entities = [],
         ComponentCollection = {};
 
-    var Entity = function() {
+    var Entity = function(componentList) {
         this.uid = Date.now() + Math.floor(
             Math.random() * 100000
         ) + '_' + entityCount;
         this._components = [];
+
+        if (componentList) {
+            var self = this;
+            componentList.forEach(function(component) {
+                self.addComponent.apply(self, component);
+            });
+        }
     };
 
     Entity.prototype = {

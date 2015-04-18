@@ -13,10 +13,9 @@ var Environment = {
     Starfield: require('../environ/backdrop')
 };
 
-var EntityFactory = {
+var Entities = {
     Player: require('../ecs/entities/player')
 };
-
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -61,6 +60,11 @@ LevelState.prototype = {
             'assets/sprites/player.png',
             110, 100
         );
+        this.load.spritesheet(
+            'enemy',
+            'assets/sprites/enemy.png',
+            100, 100
+        );
     },
     create: function() {
 
@@ -68,8 +72,8 @@ LevelState.prototype = {
 
         this.starfield = new Environment.Starfield(this.game);
 
-        this.player = EntityFactory.Player.create(this.game);
- 
+        this.player = Entities.Player.create(this.game);
+
         this.score.addAmount(0);
 
     },
