@@ -65,6 +65,11 @@ LevelState.prototype = {
             'assets/sprites/enemy.png',
             100, 100
         );
+        this.load.audio(
+            'music',
+            ['assets/audio/backing-bell.mp3',
+             'assets/audio/backing-bell.opus']
+        );
     },
     create: function() {
 
@@ -74,7 +79,11 @@ LevelState.prototype = {
 
         this.player = Entities.Player.create(this.game);
 
+        this.music = this.add.audio('music');
+        this.music.loop = true;
+
         this.score.addAmount(0);
+        this.music.play();
 
     },
     update: function() {
