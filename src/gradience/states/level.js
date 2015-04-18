@@ -1,9 +1,14 @@
+
 'use strict';
+
+var KeyMap = require('../config/keymap'),
+    gameStatus = require('../status/gamestatus');
 
 var components = require('../ecs/components');
 var factory = require('../ecs/factory');
 
 var ControlsSystem = require('../ecs/systems/controls');
+
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -13,15 +18,34 @@ var UI = {
 
 var LevelState = function() {};
 
+
 LevelState.prototype = {
+    
     init: function() {
+
         factory.initComponents(components);
         ControlsSystem.init(this.game);
 
+        var self = this;
+
+        // Setup UI
         this.score = new UI.Score(this);
         this.weaponUI = new UI.Weapon(this);
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        // Bind controls to color mixer
+        this.controls = {};
+        for(var k in KeyMap.colorToggles) {
+            console.log(k);
+            this.controls['toggle' + k] = this.game.input.keyboard.addKey(KeyMap.colorToggles[k]);
+            (function(color) {
+                self.controls['toggle' + color].onDown.add(function(key) {
+                    gameStatus.toggleColor(color); 
+                }, self);
+            })(k);
+        }
+
     },
     preload: function() {
         this.load.spritesheet(
