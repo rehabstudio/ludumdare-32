@@ -5,12 +5,21 @@ var factory = require('../ecs/factory');
 
 var ControlsSystem = require('../ecs/systems/controls');
 
+var UI = {
+    Weapon: require('../ui/weapon'),
+    Score: require('../ui/score')
+};
+
+
 var LevelState = function() {};
 
 LevelState.prototype = {
     init: function() {
         factory.initComponents(components);
         ControlsSystem.init(this.game);
+
+        this.score = new UI.Score(this);
+        this.weaponUI = new UI.Weapon(this);
     },
     preload: function() {
         this.load.spritesheet(
@@ -31,9 +40,15 @@ LevelState.prototype = {
             }
         );
         player.addComponent('ControlsArrows');
+
+        console.log("LEVEL!");
+        this.score.addAmount(0);
+
     },
-    update: function() {
+    update: function(){
         ControlsSystem.update(factory.getAll());
+        this.score.update();
+        this.weaponUI.update();
     },
     render: function() {
 
