@@ -39,13 +39,14 @@ var Components = {
         if (!this.has('Sprite')) {
             return;
         }
-        console.log(params);
         this.sprite.body.velocity.set(params.x, params.y);
         this.sprite.body.maxVelocity.set(params.maxX, params.maxY);
     },
     SineMovement: function(params) {
         this._sine = JSON.parse(JSON.stringify(params));
         this._sine.base = this.sprite[this._sine.axis];
+        this._sine.start = Date.now();
+        this._sine.frequency = 1000 / this._sine.frequency;
     }
 };
 

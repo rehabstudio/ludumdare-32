@@ -1,4 +1,3 @@
-
 'use strict';
 
 var KeyMap = require('../config/keymap'),
@@ -7,14 +6,18 @@ var KeyMap = require('../config/keymap'),
 var components = require('../ecs/components');
 var factory = require('../ecs/factory');
 
-var ControlsSystem = require('../ecs/systems/controls');
-
 var Environment = {
     Starfield: require('../environ/backdrop')
 };
 
+var Systems = {
+    Controls: require('../ecs/systems/controls'),
+    Movement: require('../ecs/systems/movement')
+};
+
 var Entities = {
-    Player: require('../ecs/entities/player')
+    Player: require('../ecs/entities/player'),
+    Enemy: require('../ecs/entities/enemy')
 };
 
 var UI = {
@@ -31,7 +34,8 @@ LevelState.prototype = {
     init: function() {
 
         factory.initComponents(components);
-        ControlsSystem.init(this.game);
+        Systems.Controls.init(this.game);
+        Systems.Movement.init(this.game);
 
         var self = this;
 
@@ -75,12 +79,36 @@ LevelState.prototype = {
 
         this.player = Entities.Player.create(this.game);
 
+        this.timer = this.game.time.create();
+        this.timer.start();
+
+        function createEnemyWave() {
+            Entities.Enemy.createWave(
+                this.game,
+                {
+                    count: 20,
+                    delay: 500,
+                    x: 900,
+                    y: Math.floor(Math.random() * 400) + 40,
+                    speed: -100,
+                    amplitude: 60,
+                    frequency: 0.01,
+                    phase: (Math.random() * 2) - 1,
+                    asset: 'enemy'
+                }
+            );
+        }
+
+        createEnemyWave.call(this);
+        this.timer.loop(2000, createEnemyWave, this);
+
         this.score.addAmount(0);
 
     },
     update: function() {
 
-        ControlsSystem.update(factory.getAll());
+        Systems.Controls.update(factory.getAll());
+        Systems.Movement.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
 
