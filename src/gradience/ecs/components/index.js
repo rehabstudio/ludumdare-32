@@ -16,6 +16,7 @@ var Components = {
     },
     Sprite: function(params) {
         this.sprite = params.game.add.sprite(params.x, params.y, params.asset);
+        this.sprite.anchor.setTo(0.5, 0.5);
     },
     Physics: function(game) {
         if (!this.has('Sprite')) {
