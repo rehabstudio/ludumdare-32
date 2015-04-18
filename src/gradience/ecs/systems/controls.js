@@ -1,16 +1,15 @@
 'use strict';
 
+var KeyMap = require('../../config/keymap');
+
 var ControlsSystem = (function() {
 
-    var keys;
+    var keys = {};
 
     function init(game) {
-        keys = {
-            up: game.input.keyboard.addKey(Phaser.Keyboard.W),
-            down: game.input.keyboard.addKey(Phaser.Keyboard.S),
-            left: game.input.keyboard.addKey(Phaser.Keyboard.A),
-            right: game.input.keyboard.addKey(Phaser.Keyboard.D)
-        };
+        for(var k in KeyMap.playerControls) {
+            keys[k] = game.input.keyboard.addKey(KeyMap.playerControls[k]);
+        }
     }
 
     function update(ents) {
@@ -37,6 +36,7 @@ var ControlsSystem = (function() {
             if (keys.right.isDown) {
                 entity.sprite.body.acceleration.add(entity.moveSpeed, 0);
             }
+            
         });
     }
 
