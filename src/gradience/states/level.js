@@ -13,6 +13,10 @@ var Environment = {
     Starfield: require('../environ/backdrop')
 };
 
+var EntityFactory = {
+    Player: require('../ecs/entities/player')
+};
+
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -64,21 +68,7 @@ LevelState.prototype = {
 
         this.starfield = new Environment.Starfield(this.game);
 
-        var player = factory.create();
-        player.addComponent(
-            'Sprite',
-            {
-                game: this.game,
-                x: 10,
-                y: 240,
-                asset: 'player'
-            }
-        );
-        player.addComponent('Physics', this.game);
-        player.addComponent('Drag', 1500);
-        player.addComponent('Velocity', { x: 500, y: 500});
-        player.addComponent('ControlsArrows', 2000);
-        player.addComponent('CollideWorld');
+        this.player = EntityFactory.Player.create(this.game);
  
         this.score.addAmount(0);
 
