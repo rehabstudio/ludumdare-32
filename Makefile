@@ -16,7 +16,7 @@ serve: node_modules
 	webpack-dev-server $(WEBPACK_OPTS)	
 
 watch: node_modules
-	webpack $(WEBPACK_OPTS)--watch
+	webpack $(WEBPACK_OPTS) --watch
 
 build: node_modules
 	webpack $(WEBPACK_OPTS)
