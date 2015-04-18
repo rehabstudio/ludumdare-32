@@ -66,7 +66,7 @@ var ControlsSystem = (function() {
 
                 if (game.time.now > PlayerShotData._lastFireTime)
                 {
-                    var bullet = Entities.PlayerShot.create(game, entity.sprite.x, entity.sprite.y);
+                    var bullet = Entities.PlayerShot.create(game, entity.sprite.x + entity.sprite.width * 0.5, entity.sprite.y);
 
                     if (bullet)
                     {

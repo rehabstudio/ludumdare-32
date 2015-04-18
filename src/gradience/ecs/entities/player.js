@@ -12,6 +12,7 @@ function createPlayer(game) {
         ['ControlsArrows', 2000],
         ['CollideWorld']
     ]);
+    player.sprite.bringToTop();
 
     return player;
 }

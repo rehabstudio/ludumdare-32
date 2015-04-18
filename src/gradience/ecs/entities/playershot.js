@@ -5,7 +5,7 @@ var factory = require('../factory'),
 var c = document.createElement('canvas'),
     ctx = c.getContext('2d');
 
-c.width = 16;
+c.width = 32;
 c.height = 4;
 
 function _createShotImage() {
@@ -29,7 +29,7 @@ function createPlayerShot(game, x, y) {
     var playerShot = factory.create([
         ['Sprite', {game: game, x: x, y: y, asset: 'playershot'}],
         ['Physics', game],
-        ['Velocity', {x: 100, y: 0}],
+        ['Velocity', {x: 600, y: 0 }],
     ]);
 
     console.log('COLOR', gameStatus.activeColor, gameStatus.activeTintColor);
