@@ -1,0 +1,30 @@
+{
+  "name": "ludum-dare-32",
+  "version": "0.0.1",
+  "description": "Team Rehab entry to Ludum Dare Game Jam - April 2015",
+  "main": "dist/build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rehabstudio/ludumdare-32.git"
+  },
+  "keywords": [
+    "ludum",
+    "dare",
+    "phaser",
+    "game",
+    "gamedev",
+    "gamejam"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rehabstudio/ludumdare-32/issues"
+  },
+  "homepage": "https://github.com/rehabstudio/ludumdare-32",
+  "dependencies": {
+    "lodash": "^3.7.0"
+  }
+}
