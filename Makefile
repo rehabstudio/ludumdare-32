@@ -1,4 +1,4 @@
-WEBPACK_OPTS = --progress --colors
+WEBPACK_OPTS = -d --progress --colors
 SUDO = sudo
 
 help:

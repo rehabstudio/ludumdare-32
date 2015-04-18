@@ -1,8 +1,9 @@
 module.exports = {
-    entry: "./src/index.js",
+    entry: './src/index.js',
     output: {
         path: './dist',
-        filename: "build.js"
+        filename: 'build.js',
+        sourceMapFilename: '[file].map'
     },
     module: {}
 };
