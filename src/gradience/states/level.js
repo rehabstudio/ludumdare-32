@@ -60,7 +60,9 @@ LevelState.prototype = {
     },
     create: function() {
 
-        this.rain = new Environment.Starfield(this.game);
+        console.log('LEVEL');
+
+        this.starfield = new Environment.Starfield(this.game);
 
         var player = factory.create();
         player.addComponent(
@@ -77,15 +79,16 @@ LevelState.prototype = {
         player.addComponent('Velocity', { x: 500, y: 500});
         player.addComponent('ControlsArrows', 2000);
         player.addComponent('CollideWorld');
-
-        
+ 
         this.score.addAmount(0);
 
     },
     update: function() {
+
         ControlsSystem.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
+
     },
     render: function() {
 
