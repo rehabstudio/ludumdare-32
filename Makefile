@@ -26,6 +26,7 @@ setup: node_modules
 node_modules: package.json
 	npm cache clean;
 	$(SUDO) npm install -g webpack;
+	$(SUDO) npm install -g webpack-dev-server;
 	npm install;
 	touch $@
 
