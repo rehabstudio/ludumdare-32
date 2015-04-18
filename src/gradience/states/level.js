@@ -13,6 +13,9 @@ var Environment = {
     Starfield: require('../environ/backdrop')
 };
 
+var Entities = {
+    Player: require('../ecs/entities/player')
+};
 
 var UI = {
     Weapon: require('../ui/weapon'),
@@ -57,35 +60,29 @@ LevelState.prototype = {
             'assets/sprites/player.png',
             110, 100
         );
+        this.load.spritesheet(
+            'enemy',
+            'assets/sprites/enemy.png',
+            100, 100
+        );
     },
     create: function() {
 
-        this.rain = new Environment.Starfield(this.game);
+        console.log('LEVEL');
 
-        var player = factory.create();
-        player.addComponent(
-            'Sprite',
-            {
-                game: this.game,
-                x: 10,
-                y: 240,
-                asset: 'player'
-            }
-        );
-        player.addComponent('Physics', this.game);
-        player.addComponent('Drag', 1500);
-        player.addComponent('Velocity', { x: 500, y: 500});
-        player.addComponent('ControlsArrows', 2000);
-        player.addComponent('CollideWorld');
+        this.starfield = new Environment.Starfield(this.game);
 
-        
+        this.player = Entities.Player.create(this.game);
+
         this.score.addAmount(0);
 
     },
     update: function() {
+
         ControlsSystem.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
+
     },
     render: function() {
 
