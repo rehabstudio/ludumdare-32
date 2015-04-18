@@ -36,11 +36,19 @@ var Components = {
         }
         this.sprite.body.drag.set(drag);
     },
-    Velocity: function(maxVelocity) {
+    Velocity: function(params) {
         if (!this.has('Sprite')) {
             return;
         }
-        this.sprite.body.maxVelocity.set(maxVelocity.x, maxVelocity.y);
+        this.sprite.body.velocity.set(params.x, params.y);
+        this.sprite.body.maxVelocity.set(params.maxX, params.maxY);
+    },
+    SineMovement: function(params) {
+        this._sine = JSON.parse(JSON.stringify(params));
+        this._sine.base = this.sprite[this._sine.axis];
+        this._sine.start = Date.now();
+        this._sine.frequency = 1000 / this._sine.frequency;
+        this._sine.phase = this._sine.phase * this._sine.frequency;
     }
 };
 
