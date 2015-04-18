@@ -16,6 +16,7 @@ var Components = {
     },
     Sprite: function(params) {
         this.sprite = params.game.add.sprite(params.x, params.y, params.asset);
+        this.sprite.anchor.setTo(0.5, 0.5);
     },
     Physics: function(game) {
         if (!this.has('Sprite')) {
@@ -40,7 +41,10 @@ var Components = {
             return;
         }
         this.sprite.body.velocity.set(params.x, params.y);
-        this.sprite.body.maxVelocity.set(params.maxX, params.maxY);
+        if(params.maxX !== undefined && params.maxY !== undefined) {
+            this.sprite.body.maxVelocity.set(params.maxX, params.maxY);
+        }
+        
     },
     SineMovement: function(params) {
         this._sine = JSON.parse(JSON.stringify(params));
