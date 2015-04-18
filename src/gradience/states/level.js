@@ -67,7 +67,7 @@ LevelState.prototype = {
         );
         this.load.spritesheet(
             'enemy',
-            'assets/sprites/enemy.png',
+            'assets/sprites/enemy_orb.png',
             100, 100
         );
         this.load.audio(
