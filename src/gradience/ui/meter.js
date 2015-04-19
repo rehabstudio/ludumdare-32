@@ -16,6 +16,12 @@ var MeterUI = function(scene, x, y, color, group) {
 MeterUI.prototype.update = function() {
     this.bar.scale.y = gameStatus.colorMeters[this.color] * 0.01;
     this.bar.y = config.meterSize - (config.meterSize * this.bar.scale.y);
+
+    if (gameStatus.colorStates[this.color]) {
+        this.bar.alpha = 1;
+    } else {
+        this.bar.alpha = 0.1;
+    }
 };
 
 module.exports = MeterUI;
