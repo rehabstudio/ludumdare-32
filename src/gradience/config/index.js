@@ -15,11 +15,11 @@ module.exports = {
 
     gameColors: {
         r: '#ff0000',
-        g: '#00ff00',
-        b: '#0000ff',
-        rg:'#ffff00',
-        rb:'#ff00ff',
-        gb:'#00ffff'
+        g: '#1af113',
+        b: '#0de0ff',
+        rg: '#c0ff01',
+        rb: '#ff00ff',
+        gb: '#4aff98'
     },
 
     inactiveColor: '#444',
