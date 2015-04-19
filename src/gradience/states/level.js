@@ -17,6 +17,7 @@ var Systems = {
 
 var Entities = {
     Player: require('../ecs/entities/player'),
+    PlayerShot: require('../ecs/entities/playershot'),
     Enemy: require('../ecs/entities/enemy'),
     Powerup: require('../ecs/entities/powerup')
 };
@@ -52,8 +53,6 @@ LevelState.prototype = {
             g: new UI.Meter(this, 14, 0, 'g', this.colorMetersGroup),
             b: new UI.Meter(this, 28, 0, 'b', this.colorMetersGroup)
         };
-
-        this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
         // Bind controls to color mixer
         this.controls = {};
@@ -145,6 +144,17 @@ LevelState.prototype = {
 
         Systems.Controls.update(factory.getAll());
         Systems.Movement.update(factory.getAll());
+        
+        this.game.physics.arcade.collide(this.player.sprite, Entities.Enemy.getGroup(), function(p, e) {
+            console.log('Player hit enemy', p, e);
+            p.kill();
+        }, null, this.game);
+        this.game.physics.arcade.collide(Entities.PlayerShot.getGroup(), Entities.Enemy.getGroup(), function(b, e) {
+            console.log('Bullet hit enemy', b, e);
+            b.kill();
+            e.kill();
+        }, null, this.game);
+
         this.score.update();
         this.weaponUI.update();
         this.colorMeters.r.update();

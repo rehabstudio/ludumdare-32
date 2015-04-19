@@ -17,7 +17,7 @@ function _createShotImage() {
     return cimg;
 }
 
-var shotImg;
+var shotImg, bulletGroup;
 
 function createPlayerShot(game, x, y) {
 
@@ -26,8 +26,10 @@ function createPlayerShot(game, x, y) {
         game.cache.addImage('playershot', null, shotImg);
     }
 
+    if(!bulletGroup) bulletGroup = game.add.group();
+
     var playerShot = factory.create([
-        ['Sprite', {game: game, x: x, y: y, asset: 'playershot'}],
+        ['Sprite', {game: game, x: x, y: y, asset: 'playershot', group: bulletGroup}],
         ['Physics', game],
         ['Velocity', {x: 600, y: 0 }],
     ]);
@@ -36,5 +38,12 @@ function createPlayerShot(game, x, y) {
     return playerShot;
 }
 
+function getGroup() {
+    return bulletGroup;
+}
 
-module.exports = { create: createPlayerShot };
+
+module.exports = { 
+    create: createPlayerShot,
+    getGroup: getGroup
+};
