@@ -2,11 +2,11 @@
 
 var factory = require('../factory');
 
-var PLAYER_SPEED = 200;
+var player, PLAYER_SPEED = 200;
 
 function createPlayer(game) {
 
-    var player = factory.create([
+    player = factory.create([
         ['Sprite', {game: game, x: 10, y: 240, asset: 'player'}],
         ['Physics', game],
         ['Velocity', { x: 0, y: 0, maxX: PLAYER_SPEED, maxY: PLAYER_SPEED }],
@@ -18,5 +18,11 @@ function createPlayer(game) {
     return player;
 }
 
+function getPlayer() {
+    return player.sprite;
+}
 
-module.exports = { create: createPlayer };
+module.exports = { 
+    create: createPlayer,
+    get: getPlayer 
+};

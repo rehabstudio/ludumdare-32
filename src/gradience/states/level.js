@@ -12,7 +12,8 @@ var Environment = {
 
 var Systems = {
     Controls: require('../ecs/systems/controls'),
-    Movement: require('../ecs/systems/movement')
+    Movement: require('../ecs/systems/movement'),
+    Collision: require('../ecs/systems/collision')
 };
 
 var Entities = {
@@ -39,6 +40,7 @@ LevelState.prototype = {
         factory.initComponents(components);
         Systems.Controls.init(this.game);
         Systems.Movement.init(this.game);
+        Systems.Collision.init(this.game);
 
         var self = this;
 
@@ -133,46 +135,8 @@ LevelState.prototype = {
 
         Systems.Controls.update(factory.getAll());
         Systems.Movement.update(factory.getAll());
+        Systems.Collision.update(factory.getAll());
         
-        this.game.physics.arcade.collide(
-            this.player.sprite,
-            Entities.Enemy.getGroup(),
-            function(p, e) {
-                console.log('Player hit enemy', p, e);
-                p.kill();
-            },
-            null,
-            this.game
-        );
-        this.game.physics.arcade.collide(
-            Entities.PlayerShot.getGroup(),
-            Entities.Enemy.getGroup(),
-            function(b, e) {
-                console.log('Bullet hit enemy', b, e);
-                b.kill();
-                e.kill();
-            },
-            null,
-            this.game
-        );
-
-        this.game.physics.arcade.collide(
-            this.player.sprite,
-            Entities.Powerup.getGroup(),
-            function(p, pu){
-                console.log(pu);
-                console.log(gameStatus.colorMeters[pu.colorKey]);
-                console.log(pu.amount);
-                gameStatus.colorMeters[pu.colorKey] += pu.amount;
-                if (gameStatus.colorMeters[pu.colorKey] > 100) {
-                    gameStatus.colorMeters[pu.colorKey] = 100;
-                }
-                pu.kill();
-            },
-            null,
-            this
-        );
-
         this.score.update();
         this.weaponUI.update();
         this.colorMeters.r.update();
