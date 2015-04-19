@@ -25,7 +25,7 @@ var CollisionSystem = (function() {
         var powerups = Entities.Powerup.getGroup();
 
         if (player && enemies) {
-            game.physics.arcade.collide(
+            game.physics.arcade.overlap(
                 player,
                 enemies,
                 function(p, e) {
@@ -38,7 +38,7 @@ var CollisionSystem = (function() {
         }
 
         if (shots && enemies) {
-            game.physics.arcade.collide(
+            game.physics.arcade.overlap(
                 shots,
                 enemies,
                 function(b, e) {
@@ -55,7 +55,7 @@ var CollisionSystem = (function() {
         }
 
         if (player && powerups) {
-            game.physics.arcade.collide(
+            game.physics.arcade.overlap(
                 player,
                 powerups,
                 function(p, pu) {
@@ -70,6 +70,16 @@ var CollisionSystem = (function() {
                 null,
                 game
             );
+        }
+
+        // might as well kill when off screen here too
+        if (enemies) {
+            enemies.forEach(function(enemy) {
+                if (enemy.x < -100 && enemy.alive) {
+                    console.log('Enemy exited screen: ', enemy);
+                    enemy.kill();
+                }
+            }, this);
         }
 
     }

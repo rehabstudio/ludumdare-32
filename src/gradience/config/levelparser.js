@@ -5,6 +5,8 @@ var yaml = require('js-yaml');
 var Parser = function(scene, path) {
     this.scene = scene;
     this.path = path;
+    this.phase = 0;
+    this.wave = 0;
 };
 
 Parser.prototype.load = function(data) {
