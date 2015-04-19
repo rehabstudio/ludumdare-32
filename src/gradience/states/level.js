@@ -60,16 +60,10 @@ LevelState.prototype = {
 
     },
     preload: function() {
-        this.load.spritesheet(
-            'player',
-            'assets/sprites/player.png',
-            110, 100
-        );
-        this.load.spritesheet(
-            'enemy',
-            'assets/sprites/enemy.png',
-            100, 100
-        );
+        this.load.image('player', 'assets/sprites/player.png');
+        this.load.image('enemy_orb', 'assets/sprites/enemy_orb.png');
+        this.load.image('enemy_ship', 'assets/sprites/enemy_ship.png');
+        this.load.image('enemy_tri', 'assets/sprites/enemy_tri.png');
         this.load.audio(
             'music',
             ['assets/audio/backing-bell.mp3',
@@ -91,6 +85,9 @@ LevelState.prototype = {
         this.timer.start();
 
         function createEnemyWave() {
+            var asset = ['enemy_orb', 'enemy_ship', 'enemy_tri'][
+                Math.floor(Math.random() * 3)
+            ];
             Entities.Enemy.createWave(
                 this.game,
                 {
@@ -102,7 +99,7 @@ LevelState.prototype = {
                     amplitude: Math.random() * 50 + 10,
                     frequency: 0.01,
                     phase: (Math.random() * 2) - 1,
-                    asset: 'enemy'
+                    asset: asset
                 }
             );
         }
