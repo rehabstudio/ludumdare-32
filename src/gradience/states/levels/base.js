@@ -32,6 +32,7 @@ BaseLevel.prototype = {
 
         this.flags = {};
         this.shaker = new Filters.Glitch.Shaker();
+        this.slitScan = new Filters.Glitch.SlitScan();
         this.glow = new Filters.Glitch.Glow();
         this.game.world.filters = [this.glow];
 
@@ -143,6 +144,7 @@ BaseLevel.prototype = {
 
         this.shaker.blurY = 5;
         this.shaker.blurX = 0;
+        this.slitScan.rand = 15;
         if (this.dialogText === undefined) {
             this.dialogText = this.add.text(
                 this.game.world.centerX, this.game.world.centerY,
@@ -156,10 +158,14 @@ BaseLevel.prototype = {
         }
         this.dialogText.anchor.set(0.5);
         this.dialogText.alpha = 0;
-        this.dialogText.filters = [this.shaker];
+        this.dialogText.filters = [this.shaker, this.slitScan];
         this.add.tween(this.dialogText)
             .to({alpha: 1}, 1000, Phaser.Easing.Linear.None, false, 1000)
             .to({alpha: 0}, 1000, Phaser.Easing.Linear.None, false, 1000)
+            .start();
+        this.add.tween(this.slitScan)
+            .to({rand: 0.1}, 1000, Phaser.Easing.Linear.None, false, 1000)
+            .to({rand: 15}, 1000, Phaser.Easing.Linear.None, false, 1000)
             .start();
         this.add.tween(this.shaker)
             .to({blurY: 0}, 1000, Phaser.Easing.Linear.None, false, 1000)
