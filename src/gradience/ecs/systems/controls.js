@@ -78,7 +78,7 @@ var ControlsSystem = (function() {
 
             //adds natural tilt movement to player sprite 
             //can be moved to top of method to apply to all sprites
-            entity.sprite.angle = (entity.sprite.body.acceleration.y/entity.sprite.body.maxVelocity.y) * 40;
+            entity.sprite.angle = (entity.sprite.body.velocity.y/entity.sprite.body.maxVelocity.y) * 0.8;
 
         });
     }
