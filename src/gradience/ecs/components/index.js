@@ -15,20 +15,32 @@ var Components = {
         this.moveSpeed = moveSpeed || 3;
     },
     Sprite: function(params) {
-        this.sprite = params.game.add.sprite(params.x, params.y, params.asset);
+        this.sprite = params.game.add.sprite(params.x, params.y, params.asset, 0, params.group);
         this.sprite.anchor.setTo(0.5, 0.5);
+        this.sprite._entity = this;
     },
     Physics: function(game) {
         if (!this.has('Sprite')) {
             return;
         }
         game.physics.enable(this.sprite, PHYSICS);
+
     },
     CollideWorld: function(game) {
         if (!this.has('Sprite')) {
             return;
         }
         this.sprite.body.collideWorldBounds = true;
+    },
+    Killable: function(game) {
+        if (!this.has('Sprite')) {
+            return;
+        }
+        var self = this;
+        this.die = function() {
+            self.sprite.kill();
+            console.log('Entity died');
+        }
     },
     Drag: function(drag) {
         if (!this.has('Sprite')) {
