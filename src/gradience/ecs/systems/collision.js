@@ -22,9 +22,11 @@ var CollisionSystem = (function() {
         }, null, game);
 
         game.physics.arcade.collide(Entities.PlayerShot.getGroup(), Entities.Enemy.getGroup(), function(b, e) {
-            console.log('Bullet hit enemy', b, e);
             b.kill();
-            e.kill();
+            if(b.tint === e.tint) {
+                console.log('Bullet hit enemy', b, e);
+                e.kill();    
+            }
         }, null, game);
 
         
