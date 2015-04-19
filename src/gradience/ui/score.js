@@ -1,8 +1,9 @@
-var config = require('../config/');
+var config = require('../config/'),
+	gameStatus = require('../status/gamestatus');
 
 var Score = function(scene) {
 
-    this.value = 0;
+    this.value = gameStatus.score;
 
     var style = config.font.baseStyle;
 
@@ -18,7 +19,7 @@ Score.prototype.addAmount = function(amt) {
 }
 
 Score.prototype.update = function() {
-    this.text.setText(this.value.toString());
+    this.text.setText(gameStatus.score.toString());
 
 };
 

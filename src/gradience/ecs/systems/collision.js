@@ -37,6 +37,7 @@ var CollisionSystem = (function() {
                 if(b.tint === e.tint) {
                     console.log('Bullet hit enemy', b, e);
                     e.kill();
+                    gameStatus.updateScore(10);
                 }
                 b.kill();
             },
