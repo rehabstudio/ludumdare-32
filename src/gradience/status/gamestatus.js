@@ -13,6 +13,12 @@ gameStatus.colorStates = {
     b: false
 };
 
+gameStatus.colorMeters = {
+    r: 100,
+    g: 100,
+    b: 100
+}
+
 // Current active mixed color
 gameStatus.activeColor = '#ffffff';
 

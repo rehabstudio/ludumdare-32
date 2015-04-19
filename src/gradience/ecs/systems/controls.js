@@ -1,6 +1,7 @@
 'use strict';
 
-var KeyMap = require('../../config/keymap'),
+var config = require('../../config'),
+    KeyMap = require('../../config/keymap'),
     gameStatus = require('../../status/gamestatus');
 
 var Entities = {
@@ -55,13 +56,21 @@ var ControlsSystem = (function() {
 
             if (keys.fire.isDown) {
                 
-                var canFire = false;
-                for(var k in gameStatus.colorStates) {
-                    if(gameStatus.colorStates[k]) {
-                        canFire = true;
+                var share = gameStatus.colorStates.r + gameStatus.colorStates.g + gameStatus.colorStates.b;
+                if (share == 0) {
+                    return false;
+                }
+
+                var shotCost = config.shotCost / share;
+                var canFire = true;
+
+                for (var k in gameStatus.colorMeters) {
+                    if (gameStatus.colorStates[k] && gameStatus.colorMeters[k] < shotCost){
+                        canFire = false;
                         break;
                     }
                 }
+
                 if (!canFire) return false;
 
                 if (game.time.now > PlayerShotData._lastFireTime)
@@ -71,6 +80,26 @@ var ControlsSystem = (function() {
                     if (bullet)
                     {
                         PlayerShotData._lastFireTime = game.time.now + PlayerShotData.fireRate;
+
+                        if (gameStatus.colorStates.r) {
+                            console.log(config.shotCost, share);
+                            gameStatus.colorMeters.r -= config.shotCost / share;
+                            if (gameStatus.colorMeters.r < 0) {
+                                gameStatus.colorMeters.r = 0;
+                            }
+                        }
+                        if (gameStatus.colorStates.g) {
+                            gameStatus.colorMeters.g -= config.shotCost / share;
+                            if (gameStatus.colorMeters.g < 0) {
+                                gameStatus.colorMeters.g = 0;
+                            }
+                        }
+                        if (gameStatus.colorStates.b) {
+                            gameStatus.colorMeters.b -= config.shotCost / share;
+                            if (gameStatus.colorMeters.b < 0) {
+                                gameStatus.colorMeters.b = 0;
+                            }
+                        }
                     }
                 }
 
