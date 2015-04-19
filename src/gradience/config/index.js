@@ -1,6 +1,7 @@
 module.exports = {
 
     Keymap: require('./keymap'),
+    LevelParser: require('./levelparser'),
 
     shotCost: 8,
     meterSize: 80,

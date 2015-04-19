@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/rehabstudio/ludumdare-32",
   "dependencies": {
+    "js-yaml": "^3.2.7",
     "lodash": "^3.7.0"
   }
 }

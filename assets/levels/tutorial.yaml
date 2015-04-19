@@ -1,0 +1,83 @@
+level:
+    name: "Tutorial"
+
+    assets:
+        image: !!pairs
+            - player: assets/sprites/player.png
+            - enemy_tri: assets/sprites/enemy_tri.png
+            - enemy_orb: assets/sprites/enemy_orb.png
+        audio: !!pairs
+            - music:
+                - assets/audio/backing-bell.mp3
+                - assets/audio/backing-bell.opus
+    flags:
+        unlimitedAmmo: true
+        collectibles: false
+
+    preDialog: 
+        - "Welcome to Gradience, now shut up and learn some stuff"
+        - "The key to this game is colour!"
+
+    postDialog:
+        - "Now you've got the basics, it's time to throw you in the deep end"
+
+    phases:
+        - name: "Phase 1"
+
+          preDialog:
+              - "Press [J] to activate your red lens and shoot with [SPACE]"
+
+          postDialog:
+              - "Enemies are only vulnerable to their own color"
+
+          waves:
+              - type: 'tri'
+                count: 3
+                formation: 'line'
+                movement: 'straightInWait'
+                color: 'r'
+                points: 100
+
+              - type: 'tri'
+                count: 5
+                formation: 'line'
+                movement: 'loopInWait'
+                color: 'r'
+                points: 100
+
+              - type: 'tri'
+                count: 5
+                formation: 'line'
+                movement: 'loopInWait'
+                color: 'g'
+                points: 200
+
+        - name: "Phase 2"
+
+          preDialog: 
+              - "Use your other lenses [J], [K] and [L] to destroy these enemies"
+
+          postDialog:
+              - "Lenses can be combined to create other colours"
+
+          waves:
+              - type: 'tri'
+                count: 5
+                formation: 'line'
+                movement: 'loopInWait'
+                color: 'b'
+                points: 200
+
+              - type: 'tri'
+                count: 5
+                formation: 'line'
+                movement: 'bounceInWait'
+                color: 'g'
+                points: 200
+
+              - type: 'orb'
+                count: 5
+                formation: 'line'
+                movement: 'loopInWait'
+                color: 'rb'
+                points: 500

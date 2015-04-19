@@ -16,7 +16,14 @@ BootState.prototype = {
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         if (window.location.hash == "#sandbox") {
             this.game.state.start('sandbox');
-        } else {
+        } 
+        
+        else if (window.location.hash.indexOf("#level") === 0) {
+            var level = window.location.hash.split('|')[1];
+            this.game.state.start('level', true, true, level);
+        }
+
+        else {
             this.game.state.start('title');
         }
     }

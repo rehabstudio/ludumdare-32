@@ -14,6 +14,7 @@ var ControlsSystem = (function() {
     var game;
     var keys = {};
     var controls = {};
+    var paused = false;
 
     function init(gameInstance) {
 
@@ -45,6 +46,9 @@ var ControlsSystem = (function() {
 
 
     function update(ents) {
+        if (paused) {
+            return;
+        }
         ents.forEach(function(entity) {
 
             if (!entity.has('ControlsArrows') || !entity.has('Sprite')) {
@@ -127,9 +131,14 @@ var ControlsSystem = (function() {
         });
     }
 
+    function pause(_paused) {
+        paused = _paused;
+    }
+
     return {
         init: init,
-        update: update
+        update: update,
+        pause: pause
     };
 
 })();

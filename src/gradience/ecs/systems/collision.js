@@ -19,53 +19,74 @@ var CollisionSystem = (function() {
 
     function update(ents) {
 
-        game.physics.arcade.collide(
-            Entities.Player.get(),
-            Entities.Enemy.getGroup(),
-            function(p, e) {
-                console.log('Player hit enemy', p, e);
-                gameStatus.updateLives(-1);
-                if(gameStatus.lives === 0) {
-                    p.kill();
-                    game.state.start('game-over');
-                } else {
-                    e.kill();
-                }
-            },
-            null,
-            game
-        );
+        var player = Entities.Player.get();
+        var shots = Entities.PlayerShot.getGroup();
+        var enemies = Entities.Enemy.getGroup();
+        var powerups = Entities.Powerup.getGroup();
 
-        game.physics.arcade.collide(
-            Entities.PlayerShot.getGroup(),
-            Entities.Enemy.getGroup(),
-            function(b, e) {
-                if(b.tint === e.tint) {
-                    console.log('Bullet hit enemy', b, e);
-                    e.kill();
-                    gameStatus.updateScore(10);
-                }
-                b.kill();
-            },
-            null,
-            game
-        );
+        if (player && enemies) {
+            game.physics.arcade.overlap(
+                player,
+                enemies,
+                function(p, e) {
+                    console.log('Player hit enemy', p, e);
+                    gameStatus.updateLives(-1);
+                    if(gameStatus.lives === 0) {
+                        p.kill();
+                        game.state.start('game-over');
+                    } else {
+                        e.kill();
+                    }
+                },
+                null,
+                game
+            );
+        }
 
-        game.physics.arcade.collide(
-            Entities.Player.get(),
-            Entities.Powerup.getGroup(),
-            function(p, pu) {
-                console.log('Player collected power', p, pu);
-                gameStatus.colorMeters[pu.colorKey] += pu.amount;
+        if (shots && enemies) {
+            game.physics.arcade.overlap(
+                shots,
+                enemies,
+                function(b, e) {
+                    if(b.tint === e.tint) {
+                        console.log('Bullet hit enemy', b, e);
+                        e.kill();
+                        gameStatus.updateScore(10);
+                    }
+                    b.kill();
+                },
+                null,
+                game
+            );
+        }
 
-                if (gameStatus.colorMeters[pu.colorKey] > 100) {
-                    gameStatus.colorMeters[pu.colorKey] = 100;
+        if (player && powerups) {
+            game.physics.arcade.overlap(
+                player,
+                powerups,
+                function(p, pu) {
+                    console.log('Player collected power', p, pu);
+                    gameStatus.colorMeters[pu.colorKey] += pu.amount;
+
+                    if (gameStatus.colorMeters[pu.colorKey] > 100) {
+                        gameStatus.colorMeters[pu.colorKey] = 100;
+                    }
+                    pu.kill();
+                },
+                null,
+                game
+            );
+        }
+
+        // might as well kill when off screen here too
+        if (enemies) {
+            enemies.forEach(function(enemy) {
+                if (enemy.x < -100 && enemy.alive) {
+                    console.log('Enemy exited screen: ', enemy);
+                    enemy.kill();
                 }
-                pu.kill();
-            },
-            null,
-            game
-        );
+            }, this);
+        }
 
     }
 

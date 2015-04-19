@@ -24,7 +24,7 @@ var Enemy = (function() {
                 y: params.y,
                 asset: params.asset,
                 group: enemyGroup,
-                tint: parseInt(getRndColor().substr(1), 16)
+                tint: parseInt(params.color || getRndColor().substr(1), 16)
             }],
             ['Physics', game],
             ['Velocity', {x: params.speed, y: 0, maxX: Math.abs(params.speed), maxY: 0}],

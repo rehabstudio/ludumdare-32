@@ -15,7 +15,7 @@ function _displayStartText() {
 
 function _waitForStart() {
     if (this.input.keyboard.isDown(Keymap.Start) || this.input.activePointer.isDown){
-        this.game.state.start('sandbox');
+        this.game.state.start('level', true, true, 'assets/levels/tutorial.yaml');
     }
 };
 
