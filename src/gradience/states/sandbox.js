@@ -9,32 +9,13 @@ var Environment = require('../environ');
 var UI = require('../ui');
 
 
-var LevelState = function() {};
+var Sandbox = function() {};
 
-LevelState.prototype = {
+Sandbox.prototype = {
 
     init: function() {
-
         Systems.init(this.game);
         UI.create(this);
-
-        var self = this;
-
-        // Bind controls to color mixer
-        this.controls = {};
-
-        for (var k in Config.Keymap.colorToggles) {
-            console.log(k);
-            this.controls['toggle' + k] = this.game.input.keyboard.addKey(
-                Config.Keymap.colorToggles[k]
-            );
-            (function(color) {
-                self.controls['toggle' + color].onDown.add(function(key) {
-                    Status.Game.toggleColor(color);
-                }, self);
-            })(k);
-        }
-
     },
     preload: function() {
         this.load.image('player', 'assets/sprites/player.png');
@@ -44,16 +25,15 @@ LevelState.prototype = {
         this.load.image('powerup', 'assets/sprites/lazer_start.png');
         this.load.audio(
             'music',
-            ['assets/audio/backing-bell.mp3',
-             'assets/audio/backing-bell.opus']
+            [
+                'assets/audio/backing-bell.mp3',
+                'assets/audio/backing-bell.opus'
+            ]
         );
     },
     create: function() {
 
-        console.log('LEVEL');
-
         this.backdrop = new Environment.Backdrop(this.game);
-
         this.player = Entities.Player.create(this.game);
 
         this.music = this.add.audio('music');
@@ -104,6 +84,39 @@ LevelState.prototype = {
         
         this.game.world.bringToTop(UI.create());
         UI.update();
+
+        this.createShader();
+    },
+    createShader: function() {
+        var fragmentSrc = [
+            "precision lowp float;",
+            "varying vec2 vTextureCoord;",
+            "varying vec4 vColor;",
+            'uniform sampler2D uSampler;',
+
+            'void main() {',
+                'vec4 sum = vec4(0);',
+                'vec2 texcoord = vTextureCoord;',
+                'for(int xx = -4; xx <= 4; xx++) {',
+                    'for(int yy = -3; yy <= 3; yy++) {',
+                        'float dist = sqrt(float(xx*xx) + float(yy*yy));',
+                        'float factor = 0.0;',
+                        'if (dist == 0.0) {',
+                            'factor = 3.0;',
+                        '} else {',
+                            'factor = 3.0/abs(float(dist));',
+                        '}',
+                        'sum += texture2D(uSampler, texcoord + vec2(xx, yy) * 0.002) * factor;',
+                    '}',
+                '}',
+                'gl_FragColor = sum * 0.025 + texture2D(uSampler, texcoord);',
+            '}'
+        ];
+        this.filter = new Phaser.Filter(this.game, null, fragmentSrc);
+        this.filter.setResolution(this.game.width, this.game.height);
+
+        this.game.world.filters = [this.filter];
+
     },
     render: function() {
 
@@ -112,4 +125,4 @@ LevelState.prototype = {
     }
 };
 
-module.exports = LevelState;
+module.exports = Sandbox;
