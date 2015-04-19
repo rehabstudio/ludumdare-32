@@ -4,13 +4,19 @@ var factory = require('../factory');
 
 var Enemy = (function() {
 
+    var enemyGroup;
+
     function create(game, params) {
+
+        if(!enemyGroup) enemyGroup = game.add.group();
+
         var enemy = factory.create([
             ['Sprite', {
                 game: game,
                 x: params.x,
                 y: params.y,
-                asset: params.asset
+                asset: params.asset,
+                group: enemyGroup
             }],
             ['Physics', game],
             ['Velocity', {x: params.speed, y: 0, maxX: Math.abs(params.speed), maxY: 0}],
@@ -19,7 +25,8 @@ var Enemy = (function() {
                 phase: params.phase || 0.0,
                 amplitude: params.amplitude || 100,
                 frequency: params.frequency || 5
-            }]
+            },
+            ['Killable', game]]
         ]);
 
         return enemy;
@@ -34,9 +41,14 @@ var Enemy = (function() {
         timer.start();
     }
 
+    function getGroup() {
+        return enemyGroup;
+    }
+
     return {
         create: create,
-        createWave: createWave
+        createWave: createWave,
+        getGroup: getGroup
     };
 })();
 

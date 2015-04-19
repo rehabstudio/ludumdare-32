@@ -13,6 +13,7 @@ BootState.prototype = {
     preload: function(){
     },
     create: function(){
+        this.game.physics.startSystem(Phaser.Physics.ARCADE);
         this.game.state.start('title');
     }
 };
