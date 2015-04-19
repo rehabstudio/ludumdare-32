@@ -26,7 +26,8 @@ var Entities = {
 var UI = {
     Weapon: require('../ui/weapon'),
     Score: require('../ui/score'),
-    Meter: require('../ui/meter')
+    Meter: require('../ui/meter'),
+    Scanlines: require('../ui/scanlines')
 };
 
 
@@ -130,6 +131,10 @@ LevelState.prototype = {
         this.score.addAmount(0);
         this.music.play();
 
+        this.scanlines = new UI.Scanlines(this.game);
+        this.game.add.existing(this.scanlines);
+        this.game.world.bringToTop(this.scanlines);
+
     },
     update: function() {
 
@@ -142,6 +147,8 @@ LevelState.prototype = {
         this.colorMeters.r.update();
         this.colorMeters.g.update();
         this.colorMeters.b.update();
+
+        this.scanlines.update();
 
     },
     render: function() {
