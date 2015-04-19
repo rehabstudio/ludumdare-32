@@ -24,6 +24,8 @@ gameStatus.score = 0;
 
 gameStatus.lives = 3;
 
+gameStatus.scoreMilestone - 1000;
+
 // Current active mixed color
 gameStatus.activeColor = '#ffffff';
 
@@ -56,6 +58,9 @@ gameStatus.updateActiveColor = function() {
 
 gameStatus.updateScore = function(amount) {
     this.score += amount;
+    if(this.score % this.scoreMilestone == 0) {
+        this.updateLives(1);
+    }
 }
 
 gameStatus.updateLives = function(amount) {
