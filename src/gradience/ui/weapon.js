@@ -1,6 +1,4 @@
-/**
- * Weapon UI goes here
- **/
+'use strict';
 
 var config = require('../config/'),
     gameStatus = require('../status/gamestatus');
@@ -8,46 +6,50 @@ var config = require('../config/'),
 // A string to represent our color indicators.
 var indString = '# R G B';
 
-var WeaponUI = function(scene) {
+var Weapon = (function() {
 
-    var style = Object.create(config.font.baseStyle);
-    style.fill = config.inactiveColor;
-    style.fontSize = '14px';
+    var instance;
 
-    var x = 10, y = scene.game.height - 40;
+    function create(scene, x, y) {
+        if (instance === undefined) {
+            var style = Object.create(config.font.baseStyle);
+            style.fill = config.inactiveColor;
+            style.fontSize = '14px';
 
-    this.indicators = scene.add.text(x, y, indString, style),
-    this.indicators.fixedToCamera = true;
-
-    console.log(this.indicators);
-
-};
-
-/**
- * Check the active status of our colors and
- * add color stops to the indicator string accordingly.
- **/
-WeaponUI.prototype.update = function() {
-
-    var isActive = false;
-    for(var k in gameStatus.colorStates) {
-        if(gameStatus.colorStates[k]) {
-            isActive = true;
-            break;
+            instance = scene.add.text(x, y, indString, style);
+            instance.fixedToCamera = true;
         }
+
+        return instance;
     }
-    var activeColor = (isActive) ? gameStatus.activeColor : config.inactiveColor;
 
-    this.indicators.addColor(activeColor, 0);
+    function update() {
+        var isActive = false;
 
-    var self = this;
-    var pos = 2, x = 0;
-    ['r','g','b'].forEach(function(k) {
-        var icol = (gameStatus.colorStates[k]) ? config.gameColors[k] : config.inactiveColor;
-        self.indicators.addColor(icol, pos + x);
-        x += 2;
-    });
+        for (var k in gameStatus.colorStates) {
+            if (gameStatus.colorStates[k]) {
+                isActive = true;
+                break;
+            }
+        }
+        var activeColor = (isActive) ? gameStatus.activeColor : config.inactiveColor;
 
-};
+        instance.addColor(activeColor, 0);
 
-module.exports = WeaponUI;
+        var pos = 2;
+        var x = 0;
+        ['r', 'g', 'b'].forEach(function(k) {
+            var icol = (gameStatus.colorStates[k]) ? config.gameColors[k] : config.inactiveColor;
+            instance.addColor(icol, pos + x);
+            x += 2;
+        });
+    }
+
+    return {
+        create: create,
+        update: update
+    };
+})();
+
+
+module.exports = Weapon;
