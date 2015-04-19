@@ -22,6 +22,8 @@ gameStatus.colorMeters = {
 
 gameStatus.score = 0;
 
+gameStatus.lives = 3;
+
 // Current active mixed color
 gameStatus.activeColor = '#ffffff';
 
@@ -54,6 +56,10 @@ gameStatus.updateActiveColor = function() {
 
 gameStatus.updateScore = function(amount) {
     this.score += amount;
+}
+
+gameStatus.updateLives = function(amount) {
+    this.lives += amount;
 }
 
 gameStatus.updateActiveColor();

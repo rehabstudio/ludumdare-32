@@ -26,6 +26,7 @@ var Entities = {
 var UI = {
     Weapon: require('../ui/weapon'),
     Score: require('../ui/score'),
+    Lives: require('../ui/lives'),
     Meter: require('../ui/meter'),
     Scanlines: require('../ui/scanlines')
 };
@@ -47,6 +48,7 @@ LevelState.prototype = {
 
         // Setup UI
         this.score = new UI.Score(this);
+        this.lives = new UI.Lives(this);
         this.weaponUI = new UI.Weapon(this);
         this.colorMetersGroup = new Phaser.Group(this.game);
         this.colorMetersGroup.x = 22;
@@ -129,6 +131,7 @@ LevelState.prototype = {
         this.timer.loop(1000, createRandomPowerup, this);
 
         this.score.addAmount(0);
+        //this.lives.Lives(0);
         this.music.play();
 
         this.scanlines = new UI.Scanlines(this.game);
@@ -143,6 +146,7 @@ LevelState.prototype = {
         Systems.Collision.update(factory.getAll());
         
         this.score.update();
+        this.lives.update();
         this.weaponUI.update();
         this.colorMeters.r.update();
         this.colorMeters.g.update();

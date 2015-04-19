@@ -7,7 +7,7 @@ var Score = function(scene) {
 
     var style = config.font.baseStyle;
 
-    this.text = scene.add.text(10, 10, this.value.toString(), style);
+    this.text = scene.add.text(10, 10, 'Score: '+this.value.toString(), style);
     this.text.fixedToCamera = true;
 
 };
@@ -19,7 +19,7 @@ Score.prototype.addAmount = function(amt) {
 }
 
 Score.prototype.update = function() {
-    this.text.setText(gameStatus.score.toString());
+    this.text.setText('Score: '+gameStatus.score.toString());
 
 };
 
