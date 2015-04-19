@@ -1,10 +1,17 @@
 'use strict';
 
-var factory = require('../factory');
+var factory = require('../factory'),
+    config = require('../../config');
 
 var Enemy = (function() {
 
-    var enemyGroup;
+    var enemyGroup,
+        colorIds = Object.keys(config.gameColors);
+
+    function getRndColor() {
+        var k = Phaser.ArrayUtils.getRandomItem(colorIds);
+        return config.gameColors[k];
+    }
 
     function create(game, params) {
 
@@ -16,7 +23,8 @@ var Enemy = (function() {
                 x: params.x,
                 y: params.y,
                 asset: params.asset,
-                group: enemyGroup
+                group: enemyGroup,
+                tint: parseInt(getRndColor().substr(1), 16)
             }],
             ['Physics', game],
             ['Velocity', {x: params.speed, y: 0, maxX: Math.abs(params.speed), maxY: 0}],

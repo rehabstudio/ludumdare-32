@@ -34,9 +34,11 @@ var CollisionSystem = (function() {
             Entities.PlayerShot.getGroup(),
             Entities.Enemy.getGroup(),
             function(b, e) {
-                console.log('Bullet hit enemy', b, e);
+                if(b.tint === e.tint) {
+                    console.log('Bullet hit enemy', b, e);
+                    e.kill();
+                }
                 b.kill();
-                e.kill();
             },
             null,
             game
@@ -58,8 +60,6 @@ var CollisionSystem = (function() {
             game
         );
 
-
-        
     }
 
     return {
