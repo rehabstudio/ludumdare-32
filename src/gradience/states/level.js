@@ -22,7 +22,8 @@ var Entities = {
 
 var UI = {
     Weapon: require('../ui/weapon'),
-    Score: require('../ui/score')
+    Score: require('../ui/score'),
+    Meter: require('../ui/meter')
 };
 
 
@@ -42,6 +43,14 @@ LevelState.prototype = {
         // Setup UI
         this.score = new UI.Score(this);
         this.weaponUI = new UI.Weapon(this);
+        this.colorMetersGroup = new Phaser.Group(this.game);
+        this.colorMetersGroup.x = 22;
+        this.colorMetersGroup.y = 360;
+        this.colorMeters = {
+            r: new UI.Meter(this, 0, 0, 'r', this.colorMetersGroup),
+            g: new UI.Meter(this, 14, 0, 'g', this.colorMetersGroup),
+            b: new UI.Meter(this, 28, 0, 'b', this.colorMetersGroup)
+        };
 
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -120,6 +129,9 @@ LevelState.prototype = {
         Systems.Movement.update(factory.getAll());
         this.score.update();
         this.weaponUI.update();
+        this.colorMeters.r.update();
+        this.colorMeters.g.update();
+        this.colorMeters.b.update();
 
     },
     render: function() {

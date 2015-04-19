@@ -1,5 +1,8 @@
 module.exports = {
 
+    shotCost: 5,
+    meterSize: 80,
+
     font: {
         baseStyle: {
             font: "24px Arial",
