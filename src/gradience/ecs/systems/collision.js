@@ -24,7 +24,12 @@ var CollisionSystem = (function() {
             Entities.Enemy.getGroup(),
             function(p, e) {
                 console.log('Player hit enemy', p, e);
-                p.kill();
+                gameStatus.updateLives(-1);
+                if(gameStatus.lives === 0) {
+                    p.kill();
+                } else {
+                    e.kill();
+                }
             },
             null,
             game

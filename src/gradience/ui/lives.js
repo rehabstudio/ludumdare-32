@@ -11,7 +11,7 @@ module.exports = (function() {
     function create(scene) {
         if (instance === undefined) {
             var style = config.font.baseStyle;
-            instance = scene.add.text(10, 10, 'Score: '+gameStatus.score.toString(), style);
+            instance = scene.add.text(10, 30, 'Lives: '+gameStatus.lives.toString(), style);
             instance.fixedToCamera = true;
         }
 
@@ -19,11 +19,15 @@ module.exports = (function() {
     }
 
     function update() {
-        instance.setText('Score: '+gameStatus.score.toString());
+        instance.setText('Lives: '+gameStatus.lives.toString());
     }
 
     function add(value) {
-        gameStatus.score += value;
+        gameStatus.lives += value;
+    }
+
+    function remove(value) {
+        gameStatus.lives -= value;
     }
 
     return {
