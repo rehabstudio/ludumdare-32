@@ -52,6 +52,7 @@ var CollisionSystem = (function() {
                 function(b, e) {
                     if(b.tint === e.tint) {
                         console.log('Bullet hit enemy', b, e);
+                        game.physics.arcade.collide(b, e);
                         e.dieFlash();
                         gameStatus.updateScore(10);
                     }
