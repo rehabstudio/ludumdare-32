@@ -1,5 +1,7 @@
 module.exports = {
 
+    Keymap: require('./keymap'),
+
     shotCost: 8,
     meterSize: 80,
     killScore: 10,

@@ -14,7 +14,11 @@ BootState.prototype = {
     },
     create: function(){
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        this.game.state.start('title');
+        if (window.location.hash == "#sandbox") {
+            this.game.state.start('sandbox');
+        } else {
+            this.game.state.start('title');
+        }
     }
 };
 

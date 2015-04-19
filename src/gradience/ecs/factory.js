@@ -1,13 +1,14 @@
 'use strict';
 
+var Components = require('./components');
+
 /**
  * Module to create an Entity
  **/
 var EntityFactory = (function() {
 
-    var entityCount = 0,
-        entities = [],
-        ComponentCollection = {};
+    var entityCount = 0;
+    var entities = [];
 
     var Entity = function(componentList) {
         this.uid = Date.now() + Math.floor(
@@ -27,8 +28,8 @@ var EntityFactory = (function() {
         addComponent: function(componentId, params) {
             this._components[componentId] = params;
 
-            if (typeof ComponentCollection[componentId] === 'function') {
-                ComponentCollection[componentId].call(this, params);
+            if (typeof Components[componentId] === 'function') {
+                Components[componentId].call(this, params);
             }
         },
         removeComponent: function(componentId) {
@@ -54,14 +55,9 @@ var EntityFactory = (function() {
         return entities;
     }
 
-    function initComponents(components) {
-        ComponentCollection = components;
-    }
-
     return {
         create: createEntity,
-        getAll: getEntities,
-        initComponents: initComponents
+        getAll: getEntities
     };
 
 })();

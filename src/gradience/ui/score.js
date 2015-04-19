@@ -1,26 +1,35 @@
+'use strict';
+
 var config = require('../config/'),
 	gameStatus = require('../status/gamestatus');
 
-var Score = function(scene) {
 
-    this.value = gameStatus.score;
+module.exports = (function() {
 
-    var style = config.font.baseStyle;
+    var instance;
 
-    this.text = scene.add.text(10, 10, this.value.toString(), style);
-    this.text.fixedToCamera = true;
+    function create(scene) {
+        if (instance === undefined) {
+            var style = config.font.baseStyle;
+            instance = scene.add.text(10, 10, gameStatus.score.toString(), style);
+            instance.fixedToCamera = true;
+        }
 
-};
+        return instance;
+    }
 
-Score.prototype.addAmount = function(amt) {
+    function update() {
+        instance.setText(gameStatus.score.toString());
+    }
 
-    this.value += amt;
-    this.update();
-}
+    function add(value) {
+        gameStatus.score += value;
+    }
 
-Score.prototype.update = function() {
-    this.text.setText(gameStatus.score.toString());
+    return {
+        create: create,
+        update: update,
+        add: add
+    };
 
-};
-
-module.exports = Score;
+})();

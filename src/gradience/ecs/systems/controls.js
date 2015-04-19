@@ -1,8 +1,7 @@
 'use strict';
 
-var config = require('../../config'),
-    KeyMap = require('../../config/keymap'),
-    gameStatus = require('../../status/gamestatus');
+var Config = require('../../config');
+var Status = require('../../status');
 
 var Entities = {
     PlayerShot: require('../entities/playershot')
@@ -24,8 +23,8 @@ var ControlsSystem = (function() {
             _lastFireTime: game.time.now
         }
 
-        for(var k in KeyMap.playerControls) {
-            keys[k] = game.input.keyboard.addKey(KeyMap.playerControls[k]);
+        for(var k in Config.Keymap.playerControls) {
+            keys[k] = game.input.keyboard.addKey(Config.Keymap.playerControls[k]);
         }
     }
 
@@ -56,16 +55,16 @@ var ControlsSystem = (function() {
 
             if (keys.fire.isDown) {
                 
-                var share = gameStatus.colorStates.r + gameStatus.colorStates.g + gameStatus.colorStates.b;
+                var share = Status.Game.colorStates.r + Status.Game.colorStates.g + Status.Game.colorStates.b;
                 if (share == 0) {
                     return false;
                 }
 
-                var shotCost = config.shotCost / share;
+                var shotCost = Config.shotCost / share;
                 var canFire = true;
 
-                for (var k in gameStatus.colorMeters) {
-                    if (gameStatus.colorStates[k] && gameStatus.colorMeters[k] < shotCost){
+                for (var k in Status.Game.colorMeters) {
+                    if (Status.Game.colorStates[k] && Status.Game.colorMeters[k] < shotCost){
                         canFire = false;
                         break;
                     }
@@ -81,23 +80,23 @@ var ControlsSystem = (function() {
                     {
                         PlayerShotData._lastFireTime = game.time.now + PlayerShotData.fireRate;
 
-                        if (gameStatus.colorStates.r) {
-                            console.log(config.shotCost, share);
-                            gameStatus.colorMeters.r -= config.shotCost / share;
-                            if (gameStatus.colorMeters.r < 0) {
-                                gameStatus.colorMeters.r = 0;
+                        if (Status.Game.colorStates.r) {
+                            console.log(Config.shotCost, share);
+                            Status.Game.colorMeters.r -= Config.shotCost / share;
+                            if (Status.Game.colorMeters.r < 0) {
+                                Status.Game.colorMeters.r = 0;
                             }
                         }
-                        if (gameStatus.colorStates.g) {
-                            gameStatus.colorMeters.g -= config.shotCost / share;
-                            if (gameStatus.colorMeters.g < 0) {
-                                gameStatus.colorMeters.g = 0;
+                        if (Status.Game.colorStates.g) {
+                            Status.Game.colorMeters.g -= Config.shotCost / share;
+                            if (Status.Game.colorMeters.g < 0) {
+                                Status.Game.colorMeters.g = 0;
                             }
                         }
-                        if (gameStatus.colorStates.b) {
-                            gameStatus.colorMeters.b -= config.shotCost / share;
-                            if (gameStatus.colorMeters.b < 0) {
-                                gameStatus.colorMeters.b = 0;
+                        if (Status.Game.colorStates.b) {
+                            Status.Game.colorMeters.b -= Config.shotCost / share;
+                            if (Status.Game.colorMeters.b < 0) {
+                                Status.Game.colorMeters.b = 0;
                             }
                         }
                     }
