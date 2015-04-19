@@ -1,6 +1,6 @@
 module.exports = {
 
-    shotCost: 5,
+    shotCost: 8,
     meterSize: 80,
 
     font: {
@@ -18,6 +18,7 @@ module.exports = {
         g: '#00ff00',
         b: '#0000ff',
         inactive: '#444'
-    }
+    },
+    gameColorKeys: ['r', 'g', 'b']
 
 };

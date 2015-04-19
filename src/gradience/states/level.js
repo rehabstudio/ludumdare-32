@@ -17,7 +17,8 @@ var Systems = {
 
 var Entities = {
     Player: require('../ecs/entities/player'),
-    Enemy: require('../ecs/entities/enemy')
+    Enemy: require('../ecs/entities/enemy'),
+    Powerup: require('../ecs/entities/powerup')
 };
 
 var UI = {
@@ -73,6 +74,7 @@ LevelState.prototype = {
         this.load.image('enemy_orb', 'assets/sprites/enemy_orb.png');
         this.load.image('enemy_ship', 'assets/sprites/enemy_ship.png');
         this.load.image('enemy_tri', 'assets/sprites/enemy_tri.png');
+        this.load.image('powerup', 'assets/sprites/lazer_start.png');
         this.load.audio(
             'music',
             ['assets/audio/backing-bell.mp3',
@@ -113,14 +115,33 @@ LevelState.prototype = {
             );
         }
 
+        function createRandomPowerup() {
+            if (Math.random() < 0.7) {
+                return false;
+            }
+            Entities.Powerup.create(this.game, {asset: 'powerup'});
+        }
+
         createEnemyWave.call(this);
         this.timer.loop(4500, createEnemyWave, this);
+        this.timer.loop(1000, createRandomPowerup, this);
 
         this.score.addAmount(0);
         this.music.play();
 
     },
     update: function() {
+
+        function collectPowerup(a, b, c) {
+            console.log(a, b, c);
+        }
+        this.game.physics.arcade.overlap(
+            Entities.Powerup.getGroup(),
+            this.player,
+            collectPowerup,
+            null,
+            this
+        );
 
         Systems.Controls.update(factory.getAll());
         Systems.Movement.update(factory.getAll());
