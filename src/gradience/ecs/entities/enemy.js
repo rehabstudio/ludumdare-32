@@ -3,6 +3,8 @@
 var factory = require('../factory'),
     config = require('../../config');
 
+var Filters = require('../../filters');
+
 var Enemy = (function() {
 
     var enemyGroup,
@@ -12,6 +14,18 @@ var Enemy = (function() {
         var k = Phaser.ArrayUtils.getRandomItem(colorIds);
         return config.gameColors[k];
     }
+
+    function shieldFlash() {
+        this.game.add.tween(this.glowFilter)
+            .to({blur: 8}, 500)
+            .to({blur: 0}, 500)
+            .start();
+        this.game.add.tween(this.cutFilter)
+            .to({rand: 10}, 500)
+            .to({rand: 0}, 500)
+            .start();
+    }
+
 
     function create(game, params) {
 
@@ -36,6 +50,16 @@ var Enemy = (function() {
             },
             ['Killable', game]]
         ]);
+
+        enemy.sprite.glowFilter = new Filters.Glitch.Glow();
+        enemy.sprite.glowFilter.blur = 0;
+        enemy.sprite.cutFilter = new Filters.Glitch.CutSlider();
+        enemy.sprite.cutFilter.rand = 0;
+        enemy.sprite.cutFilter.val1 = 1;
+        enemy.sprite.cutFilter.val2 = 1;
+
+        enemy.sprite.filters = [enemy.sprite.glowFilter, enemy.sprite.cutFilter];
+        enemy.sprite.shieldFlash = shieldFlash;
 
         return enemy;
     }

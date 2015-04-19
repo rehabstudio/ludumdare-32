@@ -53,6 +53,10 @@ var CollisionSystem = (function() {
                         e.kill();
                         gameStatus.updateScore(10);
                     }
+
+                    else {
+                        e.shieldFlash();
+                    }
                     b.kill();
                 },
                 null,
