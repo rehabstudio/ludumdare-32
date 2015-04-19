@@ -131,29 +131,47 @@ LevelState.prototype = {
     },
     update: function() {
 
-        function collectPowerup(a, b, c) {
-            console.log(a, b, c);
-        }
-        this.game.physics.arcade.overlap(
-            Entities.Powerup.getGroup(),
-            this.player,
-            collectPowerup,
-            null,
-            this
-        );
-
         Systems.Controls.update(factory.getAll());
         Systems.Movement.update(factory.getAll());
         
-        this.game.physics.arcade.collide(this.player.sprite, Entities.Enemy.getGroup(), function(p, e) {
-            console.log('Player hit enemy', p, e);
-            p.kill();
-        }, null, this.game);
-        this.game.physics.arcade.collide(Entities.PlayerShot.getGroup(), Entities.Enemy.getGroup(), function(b, e) {
-            console.log('Bullet hit enemy', b, e);
-            b.kill();
-            e.kill();
-        }, null, this.game);
+        this.game.physics.arcade.collide(
+            this.player.sprite,
+            Entities.Enemy.getGroup(),
+            function(p, e) {
+                console.log('Player hit enemy', p, e);
+                p.kill();
+            },
+            null,
+            this.game
+        );
+        this.game.physics.arcade.collide(
+            Entities.PlayerShot.getGroup(),
+            Entities.Enemy.getGroup(),
+            function(b, e) {
+                console.log('Bullet hit enemy', b, e);
+                b.kill();
+                e.kill();
+            },
+            null,
+            this.game
+        );
+
+        this.game.physics.arcade.collide(
+            this.player.sprite,
+            Entities.Powerup.getGroup(),
+            function(p, pu){
+                console.log(pu);
+                console.log(gameStatus.colorMeters[pu.colorKey]);
+                console.log(pu.amount);
+                gameStatus.colorMeters[pu.colorKey] += pu.amount;
+                if (gameStatus.colorMeters[pu.colorKey] > 100) {
+                    gameStatus.colorMeters[pu.colorKey] = 100;
+                }
+                pu.kill();
+            },
+            null,
+            this
+        );
 
         this.score.update();
         this.weaponUI.update();

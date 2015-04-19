@@ -34,10 +34,10 @@ var Powerup = (function() {
             }]
         ]);
 
-        powerup.amount = 30;
-        powerup.colorKey = config.gameColorKeys[Math.floor(Math.random() * 3)];
+        powerup.sprite.amount = 40;
+        powerup.sprite.colorKey = config.gameColorKeys[Math.floor(Math.random() * 3)];
         powerup.sprite.tint = Phaser.Color.hexToRGB(
-            config.gameColors[powerup.colorKey]
+            config.gameColors[powerup.sprite.colorKey]
         );
 
         return powerup;
