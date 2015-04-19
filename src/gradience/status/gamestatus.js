@@ -1,3 +1,4 @@
+var config = require('../config');
 /**
  * Game state to be stored here - lives, weapon state, score, etc.
  * To be passed around as a require() where needed.
@@ -27,18 +28,26 @@ gameStatus.activeTintColor = 0xffffff;
 
 // Function to toggle color status.
 gameStatus.toggleColor = function(colorKey) {
-    console.log(colorKey);
     this.colorStates[colorKey] = !this.colorStates[colorKey];
     this.updateActiveColor();
 }
 
 // Updates the active color to match the toggled flags
 gameStatus.updateActiveColor = function() {
-    var r = (this.colorStates.r) ? 'FF' : '00',
-        g = (this.colorStates.g) ? 'FF' : '00',
-        b = (this.colorStates.b) ? 'FF' : '00';
-    this.activeColor = '#' + r + g + b;
-    this.activeTintColor = parseInt(r + g + b, 16);
+    var str = '', self = this;
+    config.gameColorKeys.forEach(function(k) {
+        if(self.colorStates[k]) str += k;
+    });
+    var col;
+    if (str === 'rgb') {
+        col = '#aa77fa';
+    } else if (str === '') {
+        col = config.inactiveColor;
+    } else {
+        col = config.gameColors[str];
+    }
+    this.activeColor = col;
+    this.activeTintColor = parseInt(col.substr(1), 16);
 }
 
 gameStatus.updateActiveColor();
