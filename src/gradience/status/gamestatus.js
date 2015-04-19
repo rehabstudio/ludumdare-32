@@ -17,7 +17,9 @@ gameStatus.colorMeters = {
     r: 100,
     g: 100,
     b: 100
-}
+};
+
+gameStatus.score = 0;
 
 // Current active mixed color
 gameStatus.activeColor = '#ffffff';
@@ -39,6 +41,10 @@ gameStatus.updateActiveColor = function() {
         b = (this.colorStates.b) ? 'FF' : '00';
     this.activeColor = '#' + r + g + b;
     this.activeTintColor = parseInt(r + g + b, 16);
+}
+
+gameStatus.updateScore = function(amount) {
+    this.score += amount;
 }
 
 gameStatus.updateActiveColor();

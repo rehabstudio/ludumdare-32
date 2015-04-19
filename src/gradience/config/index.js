@@ -2,6 +2,7 @@ module.exports = {
 
     shotCost: 8,
     meterSize: 80,
+    killScore: 10,
 
     font: {
         baseStyle: {
