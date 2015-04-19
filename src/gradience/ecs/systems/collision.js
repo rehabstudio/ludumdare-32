@@ -27,6 +27,7 @@ var CollisionSystem = (function() {
                 gameStatus.updateLives(-1);
                 if(gameStatus.lives === 0) {
                     p.kill();
+                    game.state.start('game-over');
                 } else {
                     e.kill();
                 }
