@@ -16,6 +16,7 @@ var Components = {
     },
     Sprite: function(params) {
         this.sprite = params.game.add.sprite(params.x, params.y, params.asset, 0, params.group);
+        if(params.tint) this.sprite.tint = params.tint;
         this.sprite.anchor.setTo(0.5, 0.5);
         this.sprite._entity = this;
     },
