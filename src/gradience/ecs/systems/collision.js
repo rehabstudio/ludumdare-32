@@ -30,12 +30,14 @@ var CollisionSystem = (function() {
                 enemies,
                 function(p, e) {
                     console.log('Player hit enemy', p, e);
-                    gameStatus.updateLives(-1);
+                    if (!e.dying) { 
+                        gameStatus.updateLives(-1);
+                    }
                     if(gameStatus.lives === 0) {
-                        p.kill();
+                        p.dieFlash();
                         game.state.start('game-over');
                     } else {
-                        e.kill();
+                        e.dieFlash();
                     }
                 },
                 null,
@@ -50,7 +52,7 @@ var CollisionSystem = (function() {
                 function(b, e) {
                     if(b.tint === e.tint) {
                         console.log('Bullet hit enemy', b, e);
-                        e.kill();
+                        e.dieFlash();
                         gameStatus.updateScore(10);
                     }
 
