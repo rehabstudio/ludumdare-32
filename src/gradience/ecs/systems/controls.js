@@ -11,8 +11,9 @@ var PlayerShotData;
 
 var ControlsSystem = (function() {
 
-    var keys = {},
-        game;
+    var game;
+    var keys = {};
+    var controls = {};
 
     function init(gameInstance) {
 
@@ -23,10 +24,25 @@ var ControlsSystem = (function() {
             _lastFireTime: game.time.now
         }
 
-        for(var k in Config.Keymap.playerControls) {
-            keys[k] = game.input.keyboard.addKey(Config.Keymap.playerControls[k]);
+        for (var k in Config.Keymap.playerControls) {
+            keys[k] = game.input.keyboard.addKey(
+                Config.Keymap.playerControls[k]
+            );
+        }
+
+        for (var k in Config.Keymap.colorToggles) {
+            controls['toggle_' + k] = game.input.keyboard.addKey(
+                Config.Keymap.colorToggles[k]
+            );
+            (function(color) {
+                controls['toggle_' + k].onDown.add(function(key) {
+                    Status.Game.toggleColor(color);
+                }, this);
+            })(k);
+
         }
     }
+
 
     function update(ents) {
         ents.forEach(function(entity) {
