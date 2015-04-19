@@ -30,7 +30,13 @@ var CollisionSystem = (function() {
                 enemies,
                 function(p, e) {
                     console.log('Player hit enemy', p, e);
-                    p.kill();
+                    gameStatus.updateLives(-1);
+                    if(gameStatus.lives === 0) {
+                        p.kill();
+                        game.state.start('game-over');
+                    } else {
+                        e.kill();
+                    }
                 },
                 null,
                 game

@@ -3,7 +3,8 @@ var States = {
     Title: require('./states/title'),
     MainMenu: require('./states/main-menu'),
     Sandbox: require('./states/sandbox'),
-    Level: require('./states/levels/base')
+    Level: require('./states/levels/base'),
+    GameOver: require('./states/game-over')
 };
 
 var Gradience = function(){
@@ -14,6 +15,7 @@ var Gradience = function(){
     game.state.add('main-menu', States.MainMenu);
     game.state.add('sandbox', States.Sandbox);
     game.state.add('level', States.Level);
+    game.state.add('game-over', States.GameOver);
 
     game.state.start('boot');
 };
