@@ -81,6 +81,11 @@ LevelState.prototype = {
             ['assets/audio/backing-bell.mp3',
              'assets/audio/backing-bell.opus']
         );
+        this.load.audio(
+            'pew',
+            ['assets/audio/pew.mp3',
+             'assets/audio/pew.opus']
+        );
     },
     create: function() {
 
@@ -92,6 +97,7 @@ LevelState.prototype = {
 
         this.music = this.add.audio('music');
         this.music.loop = true;
+        this.sfx_pew = this.add.audio('pew');
 
         this.timer = this.game.time.create();
         this.timer.start();
