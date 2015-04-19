@@ -2,13 +2,14 @@
 
 var factory = require('../factory');
 
+var PLAYER_SPEED = 200;
+
 function createPlayer(game) {
 
     var player = factory.create([
         ['Sprite', {game: game, x: 10, y: 240, asset: 'player'}],
         ['Physics', game],
-        ['Drag', 1500],
-        ['Velocity', {x: 0, y: 0, maxX: 500, max: 500}],
+        ['Velocity', { x: 0, y: 0, maxX: PLAYER_SPEED, maxY: PLAYER_SPEED }],
         ['ControlsArrows', 2000],
         ['CollideWorld']
     ]);
