@@ -90,8 +90,8 @@ TitleState.prototype = {
         this.load.audio(
             'bells',
             [
-                'assets/audio/backing-bell.mp3',
-                'assets/audio/backing-bell.opus'
+                'assets/audio/level1.mp3',
+                'assets/audio/level1.opus'
             ]
         );
         this.load.audio(
