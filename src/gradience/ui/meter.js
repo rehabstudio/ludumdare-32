@@ -1,61 +1,80 @@
 'use strict';
 
-var config = require('../config/'),
-    gameStatus = require('../status/gamestatus');
+var Config = require('../config');
+var Status = require('../status');
+var Filters = require('../filters');
 
 module.exports = (function() {
 
-    var group;
+    var instance;
+    var activeHeight = 5;
+    var colorHeight = 20;
+    var filter;
 
-    function createBar(scene, x, y, color, group) {
-        var instance = scene.add.graphics(x, y, group);
-        instance.colorKey = color;
-
-        instance.fixedToCamera = true;
-        instance.beginFill(
-            Phaser.Color.hexToRGB(config.gameColors[color])
-        );
-        instance.drawRect(0, 0, 10, config.meterSize);
-        instance.endFill();
+    function create(scene) {
+        if (!instance) {
+            instance = scene.add.graphics();
+            instance.x = 0;
+            instance.y = (
+                instance.game.height - activeHeight * 4 - colorHeight
+            );
+            instance.fixedToCamera = true;
+            filter = new Filters.Glitch.Shaker();
+            filter.blurY = 0;
+            filter.blurX = 0;
+            instance.filters = [filter];
+        }
 
         return instance;
     }
 
-    function create(scene, x, y) {
-        if (!group) {
-            group = new Phaser.Group(scene);
-            group.x = x;
-            group.y = y;
-            createBar(scene, 0, 0, 'r', group);
-            createBar(scene, 14, 0, 'g', group);
-            createBar(scene, 28, 0, 'b', group);
-        }
-
-        return group;
-    }
-
     function update() {
-        group.children.forEach(function(instance) {
-            instance.scale.y = gameStatus.colorMeters[instance.colorKey] * 0.01;
-            instance.y = config.meterSize - (config.meterSize * instance.scale.y);
+        var position = 0;
+        var currentX = 0;
+        var activeAlpha = 0;
+        filter.blurX = 0;
 
-            if (gameStatus.colorStates[instance.colorKey]) {
-                instance.alpha = 1;
+        var start = (
+            instance.game.world.centerX - (
+                Status.Game.colorMeters.r + Status.Game.colorMeters.g + Status.Game.colorMeters.b
+            ) * 0.5
+        );
+        instance.clear();
+        for (var key in Status.Game.colorMeters) {
+            instance.beginFill(
+                Phaser.Color.hexToRGB(Config.gameColors[key].substr(1)),
+                Status.Game.colorStates[key] ? 1 : 0.1
+            );
+            if (Status.Game.colorStates[key]) {
+                activeAlpha = 1;
+                filter.blurX += 1;
             }
-
-            else {
-                instance.alpha = 0.1;
-            }
-        });
+            instance.drawRect(
+                start + currentX,
+                activeHeight,
+                Status.Game.colorMeters[key],
+                colorHeight
+            );
+            instance.endFill();
+            currentX += Status.Game.colorMeters[key];
+        }
+        instance
+            .beginFill(Status.Game.activeTintColor, activeAlpha)
+            .drawRect(start, 0, currentX, activeHeight)
+            .endFill();
+        instance
+            .beginFill(Status.Game.activeTintColor, activeAlpha)
+            .drawRect(start, colorHeight + activeHeight, currentX, activeHeight)
+            .endFill();
     }
 
     function destroy() {
-        group.destroy();
-        group = null;
+        instance.destroy();
+        instance = null;
     }
 
     function bringToTop(scene) {
-        scene.bringToTop(group);
+        scene.bringToTop(instance);
     }
 
     return {
