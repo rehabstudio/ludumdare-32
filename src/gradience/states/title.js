@@ -7,11 +7,62 @@ var Filters = require('../filters');
 
 var TitleState = function() {};
 
+
+function goTutorial() {
+    this.game.state.start('level', true, false, 'assets/levels/tutorial.yaml');
+}
+
+function goNormal() {
+    this.game.state.start('level', true, false, 'assets/levels/level_1.yaml');
+}
+
+function goSandbox() {
+    this.game.state.start('level', true, false, 'assets/levels/sandbox.yaml');
+}
+
+function makeButton(scene, text, callback, context){
+    var group = new Phaser.Group(scene);
+    scene.add.button(0, 0, 'button', callback, context, 0, 0, 0, 0, group);
+    var text = scene.add.text(65, 31, text, Config.font.baseStyle);
+    text.anchor.set(0.5);
+    group.add(text);
+    return group;
+}
+
+function showMenu() {
+    if (this.menuOpen) {
+        return;
+    }
+    this.menuOpen = true;
+    var buttons = {
+        tutorial: makeButton(this, "TUTORIAL", goTutorial, this),
+        normal: makeButton(this, "NORMAL", goNormal, this),
+        sandbox: makeButton(this, "SANDBOX", goSandbox, this)
+    };
+    buttons.tutorial.x = buttons.normal.x = buttons.sandbox.x = 900;
+    buttons.tutorial.y = 110;
+    buttons.normal.y = 210;
+    buttons.sandbox.y = 310;
+    if (this.text) {
+        this.add.tween(this.text)
+            .to({alpha: 0}, 500, Phaser.Easing.Quadratic.In, true);
+    }
+    this.add.tween(this.title)
+        .to({x: 300}, 1000, Phaser.Easing.Quadratic.Out, true);
+    this.add.tween(buttons.tutorial)
+        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1000);
+    this.add.tween(buttons.normal)
+        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1200);
+    this.add.tween(buttons.sandbox)
+        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1400);
+}
+
 function _waitForStart() {
     if (this.input.keyboard.isDown(Config.Keymap.Start) || this.input.activePointer.isDown) {
-        this.game.state.start('level', true, false, 'assets/levels/test.yaml');
+        showMenu.call(this);
     }
 }
+
 
 function _playIntroMusic() {
     this.introsound = this.add.audio('intro');
@@ -51,6 +102,7 @@ TitleState.prototype = {
             ['assets/audio/fizzle.mp3']
         );
         this.load.image('title', 'assets/sprites/logo.png');
+        this.load.image('button', 'assets/sprites/button_back.png');
     },
     create: function() {
 
@@ -124,7 +176,9 @@ TitleState.prototype = {
             .to({blur: 6}, 1000, Phaser.Easing.Quadratic.InOut)
             .start()
             .onComplete.add(function() {
-                console.log('test');
+                if (this.menuOpen) {
+                    return;
+                }
                 this.text = this.add.text(
                     this.game.world.centerX,
                     this.game.world.height - 80,
@@ -143,6 +197,7 @@ TitleState.prototype = {
                         3000
                 );
             }, this);
+
 
 
         glitch.call(this);
