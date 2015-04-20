@@ -2,6 +2,7 @@ module.exports = {
 
     Keymap: require('./keymap'),
     LevelParser: require('./levelparser'),
+    Strings: require('./strings'),
 
     shotCost: 8,
     meterSize: 80,
