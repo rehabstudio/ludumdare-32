@@ -1,0 +1,49 @@
+level:
+    name: "Test"
+
+    assets:
+        image: !!pairs
+            - player: assets/sprites/player.png
+            - enemy_tri: assets/sprites/enemy_tri.png
+            - enemy_orb: assets/sprites/enemy_orb.png
+        audio: !!pairs
+            - music:
+                - assets/audio/backing-bell.mp3
+                - assets/audio/backing-bell.opus
+    flags:
+        unlimitedAmmo: true
+        collectibles: false
+
+    phases:
+        - name: "Phase 1"
+          waves:
+              - type: 'tri'
+                count: 5
+                rotate: 2
+                formation: 'line'
+                speed: 100
+                coeff: 1
+                amplitude: 100
+                movement: 'sine'
+                color: 'r'
+                points: 100
+              - type: 'tri'
+                count: 5
+                rotate: 2
+                formation: 'line'
+                speed: 100
+                coeff: 6
+                amplitude: 100
+                movement: 'loop'
+                color: 'r'
+                points: 100
+              - type: 'tri'
+                count: 5
+                rotate: 2
+                formation: 'line'
+                speed: 100
+                coeff: 10
+                amplitude: 100
+                movement: 'zig'
+                color: 'r'
+                points: 100

@@ -114,15 +114,18 @@ BaseLevel.prototype = {
         }, this);
 
         Entities.Enemy.createWave(
-            this, 
+            this,
             {
                 count: waves[0].count,
                 delay: 250,
                 x: 900,
                 y: this.game.world.centerY,
-                speed: -100,
-                aplitude: 20,
-                frequency: 0.006,
+                rotate: waves[0].rotate,
+                formation: waves[0].formation,
+                movement: waves[0].movement,
+                speed: waves[0].speed,
+                coeff: waves[0].coeff,
+                amplitude: waves[0].amplitude,
                 asset: 'enemy_' + waves[0].type,
                 color: Config.gameColors[waves[0].color].substr(1)
             },
@@ -219,8 +222,10 @@ BaseLevel.prototype = {
         Entities.Enemy.clear();
         Entities.PlayerShot.clear();
         UI.clear();
-        this.dialogText.destroy();
-        this.dialogText = null;
+        if (this.dialogText) {
+            this.dialogText.destroy();
+            this.dialogText = null;
+        }
         this.music.stop();
     }
 };

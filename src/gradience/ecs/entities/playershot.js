@@ -43,8 +43,10 @@ function getGroup() {
 }
 
 function clear() {
-    bulletGroup.destroy();
-    bulletGroup = null;
+    if (bulletGroup) {
+        bulletGroup.destroy();
+        bulletGroup = null;
+    }
 }
 
 

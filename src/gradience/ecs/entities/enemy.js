@@ -16,11 +16,13 @@ var Enemy = (function() {
     }
 
     function shieldFlash() {
-        this.game.add.tween(this.glowFilter)
-            .to({blur: 8}, 500)
-            .to({blur: 0}, 500)
-            .start();
-        this.game.add.tween(this.cutFilter)
+        var cutFilter = new Filters.Glitch.CutSlider();
+        cutFilter.rand = 0;
+        cutFilter.val1 = 1;
+        cutFilter.val2 = 1;
+
+        this.filters = [cutFilter];
+        this.game.add.tween(cutFilter)
             .to({rand: 10}, 500)
             .to({rand: 0}, 500)
             .start();
@@ -70,24 +72,17 @@ var Enemy = (function() {
                 tint: parseInt(params.color || getRndColor().substr(1), 16)
             }],
             ['Physics', game],
+            ['Rotates', params.rotate],
             ['Velocity', {x: params.speed, y: 0, maxX: Math.abs(params.speed), maxY: 0}],
-            ['SineMovement', {
-                axis: 'y',
-                phase: params.phase || 0.0,
-                amplitude: params.amplitude || 100,
-                frequency: params.frequency || 5
+            ['FuncMovement', {
+                equation: params.movement,
+                speed: params.speed,
+                coeff: params.coeff,
+                amplitude: params.amplitude
             },
             ['Killable', game]]
         ]);
 
-        enemy.sprite.glowFilter = new Filters.Glitch.Glow();
-        enemy.sprite.glowFilter.blur = 0;
-        enemy.sprite.cutFilter = new Filters.Glitch.CutSlider();
-        enemy.sprite.cutFilter.rand = 0;
-        enemy.sprite.cutFilter.val1 = 1;
-        enemy.sprite.cutFilter.val2 = 1;
-
-        enemy.sprite.filters = [enemy.sprite.glowFilter, enemy.sprite.cutFilter];
         enemy.sprite.shieldFlash = shieldFlash;
         enemy.sprite.dieFlash = dieFlash;
 
