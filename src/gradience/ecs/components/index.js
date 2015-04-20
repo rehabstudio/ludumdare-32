@@ -8,6 +8,7 @@
  **/
 
 var PHYSICS = Phaser.Physics.ARCADE;
+var Config = require('../../config');
 
 var Components = {
 
@@ -58,13 +59,17 @@ var Components = {
         }
         
     },
-    SineMovement: function(params) {
-        this._sine = JSON.parse(JSON.stringify(params));
-        this._sine.base = this.sprite[this._sine.axis];
-        this._sine.start = Date.now();
-        this._sine.frequency = 1000 / this._sine.frequency;
-        this._sine.phase = this._sine.phase * this._sine.frequency;
-    }
+    Rotates: function(speed) {
+        this.sprite.body.angularVelocity = speed;
+        this._rotationSpeed = speed;
+    },
+    FuncMovement: function(params) {
+        console.log(params);
+        this._func = JSON.parse(JSON.stringify(params));
+        this._func.baseY = this.sprite.y;
+        this._func.equation = Config.Movements[this._func.equation];
+        this._func.start = Date.now();
+    },
 };
 
 module.exports = Components;

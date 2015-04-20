@@ -16,13 +16,15 @@ var MovementSystem = (function() {
                 return;
             }
 
-            if (entity.has('SineMovement')) {
-                var millis = (
-                    Date.now() - entity._sine.start + entity._sine.phase
-                ) % entity._sine.frequency;
-                var phase = (millis / entity._sine.frequency) * 360;
-                var offset = entity._sine.amplitude * Math.sin(phase);
-                entity.sprite[entity._sine.axis] = entity._sine.base + offset;
+            if (entity.has('FuncMovement')) {
+                var delta = (Date.now() - entity._func.start) * 0.001;
+                var pos = entity._func.equation(delta, entity._func.coeff);
+                entity.sprite.x = entity.sprite.game.width - pos[0] * entity._func.speed;
+                entity.sprite.y = entity._func.baseY + pos[1] * entity._func.amplitude;
+            }
+
+            if (entity.has('Rotates')) {
+                entity.sprite.body.rotation += entity._rotationSpeed;
             }
 
         });
