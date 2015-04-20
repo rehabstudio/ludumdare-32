@@ -23,12 +23,10 @@ BaseLevel.prototype = {
     },
     create: function(a) {
         UI.create(this);
+        this.add.audio('intro', 1).play();
+        this.bells = this.add.audio('bells', 10, true).play();
 
         this.backdrop = new Environment.Backdrop(this.game);
-
-        this.music = this.add.audio('music');
-        this.music.loop = true;
-        this.music.play();
 
         this.flags = {};
         this.shaker = new Filters.Glitch.Shaker();
@@ -226,7 +224,7 @@ BaseLevel.prototype = {
             this.dialogText.destroy();
             this.dialogText = null;
         }
-        this.music.stop();
+        this.bells.stop();
     }
 };
 

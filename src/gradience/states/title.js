@@ -9,12 +9,14 @@ var TitleState = function() {};
 
 function _waitForStart() {
     if (this.input.keyboard.isDown(Config.Keymap.Start) || this.input.activePointer.isDown) {
-        this.game.state.start('level', true, false, 'assets/levels/tutorial.yaml');
+        this.game.state.start('level', true, false, 'assets/levels/test.yaml');
     }
 }
 
 function _playIntroMusic() {
-    this.intromusic = this.add.audio('intro');
+    this.introsound = this.add.audio('intro');
+    this.introsound.play();
+    this.intromusic = this.add.audio('title_loop', 1, true);
     this.intromusic.play();
 }
 
@@ -26,6 +28,27 @@ TitleState.prototype = {
             'intro',
             ['assets/audio/intro.mp3',
              'assets/audio/intro.opus']
+        );
+        this.load.audio(
+            'bells',
+            ['assets/audio/backing-bell.mp3',
+             'assets/audio/backing-bell.opus']
+        );
+        this.load.audio(
+            'title_loop',
+            ['assets/audio/title_loop.mp3']
+        );
+        this.load.audio(
+            'laser_shot',
+            ['assets/audio/fire_laser.mp3']
+        );
+        this.load.audio(
+            'laser_hit',
+            ['assets/audio/laser_hit.mp3']
+        );
+        this.load.audio(
+            'fizzle',
+            ['assets/audio/fizzle.mp3']
         );
         this.load.image('title', 'assets/sprites/logo.png');
     },
@@ -77,6 +100,14 @@ TitleState.prototype = {
         this.title.scale.set(0.8);
         this.title.alpha = 0;
 
+        // fudge to ensure font is loaded
+        this.add.text(
+            this.game.world.centerX,
+            this.game.world.height - 80,
+            Config.Strings.startText,
+            Config.font.baseStyle
+        ).destroy();
+
         this.game.world.filters = [
             filters.heavyGlow,
             filters.convergence,
@@ -91,19 +122,28 @@ TitleState.prototype = {
         this.add.tween(filters.heavyGlow)
             .to({blur: 10}, 1000, Phaser.Easing.Quadratic.Out)
             .to({blur: 6}, 1000, Phaser.Easing.Quadratic.InOut)
-            .start();
+            .start()
+            .onComplete.add(function() {
+                console.log('test');
+                this.text = this.add.text(
+                    this.game.world.centerX,
+                    this.game.world.height - 80,
+                    Config.Strings.startText,
+                    Config.font.baseStyle
+                );
+                this.text.anchor.set(0.5);
+                this.text.alpha = 0;
+                this.text.y += 40;
+                this.add.tween(this.text)
+                    .to(
+                        {alpha: 1, y: "-40"},
+                        1000,
+                        Phaser.Easing.Quadratic.Out,
+                        true,
+                        3000
+                );
+            }, this);
 
-        this.text = this.add.text(
-            this.game.world.centerX,
-            this.game.world.height - 80,
-            Config.Strings.startText,
-            Config.font.baseStyle
-        );
-        this.text.anchor.set(0.5);
-        this.text.alpha = 0;
-        this.text.y += 40;
-        this.add.tween(this.text)
-            .to({alpha: 1, y: "-40"}, 1000, Phaser.Easing.Quadratic.Out, true, 5000);
 
         glitch.call(this);
     },
@@ -113,6 +153,7 @@ TitleState.prototype = {
     render: function() {
     },
     shutdown: function() {
+        this.intromusic.stop();
     }
 };
 
