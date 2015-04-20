@@ -2,10 +2,7 @@
 
 var Score = require('./score');
 var Lives = require('./lives');
-var Weapon = require('./weapon');
 var Meters = require('./meter');
-var Scanlines = require('./scanlines');
-
 
 var UI = (function() {
 
@@ -16,7 +13,6 @@ var UI = (function() {
             elements.score = Score.create(scene);
             elements.lives = Lives.create(scene);
             elements.meters = Meters.create(scene);
-            elements.scanlines = Scanlines.create(scene);
         }
 
         return elements;
@@ -45,7 +41,6 @@ var UI = (function() {
         Score: Score,
         Lives: Lives,
         Meters: Meters,
-        Scanlines: Scanlines,
 
         create: create,
         update: update,

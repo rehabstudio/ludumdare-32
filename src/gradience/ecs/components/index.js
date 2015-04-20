@@ -64,7 +64,6 @@ var Components = {
         this._rotationSpeed = speed;
     },
     FuncMovement: function(params) {
-        console.log(params);
         this._func = JSON.parse(JSON.stringify(params));
         this._func.baseY = this.sprite.y;
         this._func.equation = Config.Movements[this._func.equation];

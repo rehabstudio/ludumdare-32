@@ -20,6 +20,7 @@ function dieFlash() {
         .start()
         .onComplete.add(function() {
             this.kill();
+            this.game.state.start('game-over', true, false);
         }, this);
 }
 

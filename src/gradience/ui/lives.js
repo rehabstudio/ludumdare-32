@@ -42,7 +42,12 @@ module.exports = (function() {
         }
 
         if (gameStatus.lives == 0) {
+            instance.game.startGlitch();            
             lives[0].alpha = 0.1;
+        }
+
+        else {
+            instance.game.stopGlitch();
         }
     }
 
