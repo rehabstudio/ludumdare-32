@@ -37,6 +37,7 @@ BaseLevel.prototype = {
         this.game.world.filters = [this.glow];
 
         this.onWaveDefeated = new Phaser.Signal();
+        this.onWaveCreated = new Phaser.Signal();
 
         this.startLevel();
     },
@@ -52,7 +53,7 @@ BaseLevel.prototype = {
 
         this.showDialog(this.parser.level.preDialog || [], function() {
             console.log("!");
-            this.startPhase(this.parser.level.phases.slice(), function(){
+            this.startPhase(this.parser.level.phases.slice(), function() {
                 this.endLevel();
             }, this);
         }, this);
@@ -99,23 +100,38 @@ BaseLevel.prototype = {
         }
 
         console.log("Waves remaining: " + waves.length); 
+
+        // horrible but getting around the problem ok
         this.onWaveDefeated.removeAll();
-        this.onWaveDefeated.add(function() {
-            this.onWaveDefeated.removeAll();
-            this.startWave(waves.slice(1), callback, context);
+        this.onWaveCreated.removeAll();
+        this.onWaveCreated.add(function(){
+            console.log(" - wave created");
+            this.onWaveCreated.removeAll();
+            this.onWaveDefeated.add(function() {
+                console.log(" - wave destroyed");
+                this.onWaveDefeated.removeAll();
+                this.startWave(waves.slice(1), callback, context);
+            }, this);
         }, this);
 
-        Entities.Enemy.createWave(this, {
-            count: waves[0].count,
-            delay: 250,
-            x: 900,
-            y: this.game.world.centerY,
-            speed: -100,
-            aplitude: 20,
-            frequency: 0.006,
-            asset: 'enemy_' + waves[0].type,
-            color: Config.gameColors[waves[0].color].substr(1)
-        });
+        Entities.Enemy.createWave(
+            this, 
+            {
+                count: waves[0].count,
+                delay: 250,
+                x: 900,
+                y: this.game.world.centerY,
+                speed: -100,
+                aplitude: 20,
+                frequency: 0.006,
+                asset: 'enemy_' + waves[0].type,
+                color: Config.gameColors[waves[0].color].substr(1)
+            },
+            function() {
+                this.onWaveCreated.dispatch();
+            },
+            this
+    );
     },
     createPlayer: function() {
         this.player = Entities.Player.create(this.game);
