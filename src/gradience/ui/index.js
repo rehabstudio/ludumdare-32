@@ -9,29 +9,18 @@ var Scanlines = require('./scanlines');
 
 var UI = (function() {
 
-    var group;
-
+    var elements;
     function create(scene) {
-        if (group === undefined) {
-            group = new Phaser.Group(scene);
-
-            var score = Score.create(scene);
-            group.addChild(score);
-
-            var lives = Lives.create(scene);
-            group.addChild(lives);
-
-            var weapon = Weapon.create(scene, 10, scene.game.height - 40);
-            group.addChild(weapon);
-
-            var meters = Meters.create(scene, 22, scene.game.height - 120);
-            group.addChild(meters);
-
-            var scanlines = Scanlines.create(scene);
-            group.addChild(scanlines);
+        if (!elements) {
+            elements = {};
+            elements.score = Score.create(scene);
+            elements.lives = Lives.create(scene);
+            elements.weapon = Weapon.create(scene, 10, scene.game.height - 40);
+            elements.meters = Meters.create(scene, 22, scene.game.height - 120);
+            elements.scanlines = Scanlines.create(scene);
         }
 
-        return group;
+        return elements;
     }
 
     function update() {
@@ -39,6 +28,21 @@ var UI = (function() {
         Lives.update();
         Weapon.update();
         Meters.update();
+    }
+
+    function bringToTop(scene) {
+        Score.bringToTop(scene);
+        Lives.bringToTop(scene);
+        Weapon.bringToTop(scene);
+        Meters.bringToTop(scene);
+    }
+
+    function clear(){
+        Score.destroy();
+        Lives.destroy();
+        Weapon.destroy();
+        Meters.destroy();
+        elements = null;
     }
 
     return {
@@ -49,7 +53,9 @@ var UI = (function() {
         Scanlines: Scanlines,
 
         create: create,
-        update: update
+        update: update,
+        clear: clear,
+        bringToTop: bringToTop
     };
 
 })();

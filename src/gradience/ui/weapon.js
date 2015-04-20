@@ -11,7 +11,7 @@ var Weapon = (function() {
     var instance;
 
     function create(scene, x, y) {
-        if (instance === undefined) {
+        if (!instance) {
             var style = Object.create(config.font.baseStyle);
             style.fill = config.inactiveColor;
             style.fontSize = '14px';
@@ -45,9 +45,20 @@ var Weapon = (function() {
         });
     }
 
+    function destroy() {
+        instance.destroy();
+        instance = null;
+    }
+
+    function bringToTop(scene) {
+        scene.bringToTop(instance);
+    }
+
     return {
         create: create,
-        update: update
+        update: update,
+        destroy: destroy,
+        bringToTop: bringToTop
     };
 })();
 

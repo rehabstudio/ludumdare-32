@@ -56,7 +56,9 @@ var Enemy = (function() {
 
     function create(game, params) {
 
-        if(!enemyGroup) enemyGroup = game.add.group();
+        if (!enemyGroup) {
+            enemyGroup = game.add.group();
+        }
 
         var enemy = factory.create([
             ['Sprite', {
@@ -106,10 +108,16 @@ var Enemy = (function() {
         return enemyGroup;
     }
 
+    function clearEnemies() {
+        enemyGroup.destroy();
+        enemyGroup = null;
+    }
+
     return {
         create: create,
         createWave: createWave,
-        getGroup: getGroup
+        getGroup: getGroup,
+        clear: clearEnemies
     };
 })();
 

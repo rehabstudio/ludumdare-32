@@ -15,15 +15,15 @@ var BaseLevel = function() {};
 BaseLevel.prototype = {
 
     init: function(levelConfig) {
-        Systems.init(this.game);
-        UI.create(this);
-
+        Systems.init(this);
         this.parser = new Config.LevelParser(this, levelConfig);
     },
     preload: function() {
         this.parser.load();
     },
-    create: function() {
+    create: function(a) {
+        UI.create(this);
+
         this.backdrop = new Environment.Backdrop(this.game);
 
         this.music = this.add.audio('music');
@@ -52,7 +52,6 @@ BaseLevel.prototype = {
         this.createPlayer();
 
         this.showDialog(this.parser.level.preDialog || [], function() {
-            console.log("!");
             this.startPhase(this.parser.level.phases.slice(), function() {
                 this.endLevel();
             }, this);
@@ -67,7 +66,7 @@ BaseLevel.prototype = {
         this.showDialog(this.parser.level.postDialog || [], function() {
             if ('nextLevel' in this.parser.level) {
                 this.game.state.start(
-                    'level', true, true,
+                    'level', true, false,
                     this.parser.level.nextLevel
                 );
             }
@@ -134,7 +133,7 @@ BaseLevel.prototype = {
     );
     },
     createPlayer: function() {
-        this.player = Entities.Player.create(this.game);
+        this.player = Entities.Player.create(this);
         this.player.sprite.body.enable = false;
         this.player.sprite.x = -600;
         this.add.tween(this.player.sprite)
@@ -161,7 +160,7 @@ BaseLevel.prototype = {
         this.shaker.blurY = 5;
         this.shaker.blurX = 0;
         this.slitScan.rand = 15;
-        if (this.dialogText === undefined) {
+        if (!this.dialogText) {
             this.dialogText = this.add.text(
                 this.game.world.centerX, this.game.world.centerY,
                 dialog[0],
@@ -209,13 +208,20 @@ BaseLevel.prototype = {
             Status.Game.colorMeters.b = 100;
         }
 
-        this.game.world.bringToTop(UI.create());
+        UI.bringToTop(this.game.world);
         UI.update();
     },
     render: function() {
 
     },
     shutdown: function() {
+        Factory.clear();
+        Entities.Enemy.clear();
+        Entities.PlayerShot.clear();
+        UI.clear();
+        this.dialogText.destroy();
+        this.dialogText = null;
+        this.music.stop();
     }
 };
 

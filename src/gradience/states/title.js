@@ -9,7 +9,7 @@ var TitleState = function() {};
 
 function _waitForStart() {
     if (this.input.keyboard.isDown(Config.Keymap.Start) || this.input.activePointer.isDown) {
-        this.game.state.start('level', true, true, 'assets/levels/tutorial.yaml');
+        this.game.state.start('level', true, false, 'assets/levels/tutorial.yaml');
     }
 }
 
@@ -30,7 +30,6 @@ TitleState.prototype = {
         this.load.image('title', 'assets/sprites/logo.png');
     },
     create: function() {
-        console.log('TITLE');
 
         _playIntroMusic.call(this);
 

@@ -101,7 +101,6 @@ var ControlsSystem = (function() {
                         PlayerShotData._lastFireTime = game.time.now + PlayerShotData.fireRate;
 
                         if (Status.Game.colorStates.r) {
-                            console.log(Config.shotCost, share);
                             Status.Game.colorMeters.r -= Config.shotCost / share;
                             if (Status.Game.colorMeters.r < 0) {
                                 Status.Game.colorMeters.r = 0;

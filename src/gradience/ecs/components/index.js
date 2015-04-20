@@ -40,7 +40,6 @@ var Components = {
         var self = this;
         this.die = function() {
             self.sprite.kill();
-            console.log('Entity died');
         }
     },
     Drag: function(drag) {

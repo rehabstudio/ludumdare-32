@@ -55,9 +55,15 @@ var EntityFactory = (function() {
         return entities;
     }
 
+    function clearEntities() {
+        entityCount = 0;
+        entities = [];
+    }
+
     return {
         create: createEntity,
-        getAll: getEntities
+        getAll: getEntities,
+        clear: clearEntities
     };
 
 })();

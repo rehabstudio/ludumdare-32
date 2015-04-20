@@ -22,7 +22,6 @@ Parser.prototype.load = function(data) {
             for (var assetType in this.level.assets) {
                 for (var idx in this.level.assets[assetType]) {
                     var pair = this.level.assets[assetType][idx];
-                    console.log(assetType, pair);
                     this.scene.game.load[assetType](pair[0], pair[1]);
                 }
             }
