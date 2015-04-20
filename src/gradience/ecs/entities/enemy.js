@@ -92,12 +92,13 @@ var Enemy = (function() {
         return enemy;
     }
 
-    function createWave(game, params) {
-        var timer = game.time.create(true);
+    function createWave(game, params, callback, context) {
+        var timer = game.time.create(true, callback);
 
         for (var idx = 0; idx < params.count; idx++) {
             timer.add(params.delay * idx, create, null, game, params);
         }
+        timer.add(params.delay * idx, callback, context);
         timer.start();
     }
 
