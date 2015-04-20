@@ -15,8 +15,7 @@ var UI = (function() {
             elements = {};
             elements.score = Score.create(scene);
             elements.lives = Lives.create(scene);
-            elements.weapon = Weapon.create(scene, 10, scene.game.height - 40);
-            elements.meters = Meters.create(scene, 22, scene.game.height - 120);
+            elements.meters = Meters.create(scene);
             elements.scanlines = Scanlines.create(scene);
         }
 
@@ -26,21 +25,18 @@ var UI = (function() {
     function update() {
         Score.update();
         Lives.update();
-        Weapon.update();
         Meters.update();
     }
 
     function bringToTop(scene) {
         Score.bringToTop(scene);
         Lives.bringToTop(scene);
-        Weapon.bringToTop(scene);
         Meters.bringToTop(scene);
     }
 
     function clear(){
         Score.destroy();
         Lives.destroy();
-        Weapon.destroy();
         Meters.destroy();
         elements = null;
     }
@@ -48,7 +44,6 @@ var UI = (function() {
     return {
         Score: Score,
         Lives: Lives,
-        Weapon: Weapon,
         Meters: Meters,
         Scanlines: Scanlines,
 
