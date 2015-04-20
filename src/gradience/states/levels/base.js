@@ -23,6 +23,7 @@ BaseLevel.prototype = {
     },
     create: function(a) {
         UI.create(this);
+        Status.Game.lives = 3;
         this.add.audio('intro', 1).play();
         this.bells = this.add.audio('bells', 10, true).play();
 
@@ -37,6 +38,7 @@ BaseLevel.prototype = {
         this.onWaveDefeated = new Phaser.Signal();
         this.onWaveCreated = new Phaser.Signal();
 
+        this.game.enableFilters();
         this.startLevel();
     },
     startLevel: function() {

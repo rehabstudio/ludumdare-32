@@ -30,11 +30,18 @@ var CollisionSystem = (function() {
                 enemies,
                 function(p, e) {
                     if (!e.dying) { 
+                        game.add.audio('glitch', 1).play();
+                        if ('game' in game) {
+                            game.game.glitch();
+                        }
+                        
+                        else {
+                            game.glitch();
+                        }
                         gameStatus.updateLives(-1);
                     }
                     if(gameStatus.lives === 0) {
                         p.dieFlash();
-                        game.state.start('game-over');
                     } else {
                         e.dieFlash();
                     }
@@ -49,18 +56,20 @@ var CollisionSystem = (function() {
                 shots,
                 enemies,
                 function(b, e) {
-                    if(b.tint === e.tint) {
-                        game.physics.arcade.collide(b, e);
-                        e.dieFlash();
-                        game.add.audio('laser_hit', 0.5).play();
-                        gameStatus.updateScore(10);
-                    }
+                    if (!e.dying) { 
+                        if(b.tint === e.tint) {
+                            game.physics.arcade.collide(b, e);
+                            e.dieFlash();
+                            game.add.audio('laser_hit', 0.5).play();
+                            gameStatus.updateScore(10);
+                        }
 
-                    else {
-                        e.shieldFlash();
-                        game.add.audio('fizzle', 0.5).play();
+                        else {
+                            e.shieldFlash();
+                            game.add.audio('fizzle', 0.5).play();
+                        }
+                        b.kill();
                     }
-                    b.kill();
                 },
                 null,
                 game
