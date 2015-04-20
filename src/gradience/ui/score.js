@@ -11,15 +11,16 @@ module.exports = (function() {
     function create(scene) {
         if (!instance) {
             var style = config.font.baseStyle;
-            instance = scene.add.text(10, 10, 'Score: '+gameStatus.score.toString(), style);
-            instance.fixedToCamera = true;
+            instance = scene.add.text(5, 5, gameStatus.score.toString(), style);
         }
 
         return instance;
     }
 
     function update() {
-        instance.setText('Score: '+gameStatus.score.toString());
+        instance.setText(gameStatus.score.toString());
+        instance.x = instance.game.width - instance.width - 5;
+        instance.y = 0;
     }
 
     function add(value) {

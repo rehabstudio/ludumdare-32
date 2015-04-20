@@ -9,14 +9,17 @@ var TitleState = function() {};
 
 
 function goTutorial() {
+    this.menuOpen = false;
     this.game.state.start('level', true, false, 'assets/levels/tutorial.yaml');
 }
 
 function goNormal() {
+    this.menuOpen = false;
     this.game.state.start('level', true, false, 'assets/levels/level_1.yaml');
 }
 
 function goSandbox() {
+    this.menuOpen = false;
     this.game.state.start('level', true, false, 'assets/levels/sandbox.yaml');
 }
 

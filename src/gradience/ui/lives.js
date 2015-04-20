@@ -7,19 +7,43 @@ var config = require('../config/'),
 module.exports = (function() {
 
     var instance;
+    var lives;
 
     function create(scene) {
         if (!instance) {
-            var style = config.font.baseStyle;
-            instance = scene.add.text(10, 30, 'Lives: '+gameStatus.lives.toString(), style);
-            instance.fixedToCamera = true;
+            lives = [];
+            instance = scene.add.group();
+            lives[0] = scene.add.sprite(0, 0, 'player', 0, instance);
+            lives[0].scale.set(0.7);
+            lives[1] = scene.add.sprite(30, 0, 'player', 0, instance);
+            lives[1].scale.set(0.7);
+            lives[2] = scene.add.sprite(60, 0, 'player', 0, instance);
+            lives[2].scale.set(0.7);
+            instance.x = 5;
+            instance.y = 5;
         }
 
         return instance;
     }
 
     function update() {
-        instance.setText('Lives: '+gameStatus.lives.toString());
+        lives[0].alpha = lives[1].alpha = lives[2].alpha = 1;
+
+        if (gameStatus.lives == 3) {
+            return;
+        }
+
+        if (gameStatus.lives <= 2) {
+            lives[2].alpha = 0.1;
+        }
+
+        if (gameStatus.lives <= 1) {
+            lives[1].alpha = 0.1;
+        }
+
+        if (gameStatus.lives == 0) {
+            lives[0].alpha = 0.1;
+        }
     }
 
     function add(value) {

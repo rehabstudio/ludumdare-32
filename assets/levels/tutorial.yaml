@@ -35,8 +35,9 @@ level:
                 count: 3
                 formation: 'line'
                 speed: 100
+                rotate: 5
                 coeff: 6
-                amplitude: 100
+                amplitude: 20
                 movement: 'sine'
                 color: 'r'
                 points: 100
@@ -45,8 +46,9 @@ level:
                 count: 5
                 formation: 'line'
                 speed: 100
+                rotate: 5
                 coeff: 6
-                amplitude: 100
+                amplitude: 20
                 movement: 'sine'
                 color: 'r'
                 points: 100
@@ -55,8 +57,9 @@ level:
                 count: 5
                 formation: 'line'
                 speed: 100
+                rotate: 15
                 coeff: 6
-                amplitude: 100
+                amplitude: 20
                 movement: 'sine'
                 color: 'g'
                 points: 200
@@ -73,20 +76,32 @@ level:
               - type: 'tri'
                 count: 5
                 formation: 'line'
-                movement: 'loopInWait'
+                speed: 100
+                rotate: 5
+                coeff: 6
+                amplitude: 20
+                movement: 'sine'
                 color: 'b'
                 points: 200
 
               - type: 'tri'
                 count: 5
                 formation: 'line'
-                movement: 'bounceInWait'
+                speed: 100
+                rotate: 5
+                coeff: 6
+                amplitude: 20
+                movement: 'sine'
                 color: 'g'
                 points: 200
 
               - type: 'orb'
                 count: 5
                 formation: 'line'
-                movement: 'loopInWait'
+                speed: 100
+                rotate: 25
+                coeff: 6
+                amplitude: 20
+                movement: 'sine'
                 color: 'rb'
                 points: 500
