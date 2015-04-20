@@ -52,11 +52,13 @@ var CollisionSystem = (function() {
                     if(b.tint === e.tint) {
                         game.physics.arcade.collide(b, e);
                         e.dieFlash();
+                        game.add.audio('laser_hit', 0.5).play();
                         gameStatus.updateScore(10);
                     }
 
                     else {
                         e.shieldFlash();
+                        game.add.audio('fizzle', 0.5).play();
                     }
                     b.kill();
                 },

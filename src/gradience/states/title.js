@@ -30,8 +30,25 @@ TitleState.prototype = {
              'assets/audio/intro.opus']
         );
         this.load.audio(
+            'bells',
+            ['assets/audio/backing-bell.mp3',
+             'assets/audio/backing-bell.opus']
+        );
+        this.load.audio(
             'title_loop',
             ['assets/audio/title_loop.mp3']
+        );
+        this.load.audio(
+            'laser_shot',
+            ['assets/audio/fire_laser.mp3']
+        );
+        this.load.audio(
+            'laser_hit',
+            ['assets/audio/laser_hit.mp3']
+        );
+        this.load.audio(
+            'fizzle',
+            ['assets/audio/fizzle.mp3']
         );
         this.load.image('title', 'assets/sprites/logo.png');
     },

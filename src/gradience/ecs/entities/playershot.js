@@ -35,6 +35,7 @@ function createPlayerShot(game, x, y) {
     ]);
 
     playerShot.sprite.tint = gameStatus.activeTintColor;
+    game.add.audio('laser_shot', 0.5).play();
     return playerShot;
 }
 
