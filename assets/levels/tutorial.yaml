@@ -34,21 +34,30 @@ level:
               - type: 'tri'
                 count: 3
                 formation: 'line'
-                movement: 'straightInWait'
+                speed: 100
+                coeff: 6
+                amplitude: 100
+                movement: 'sine'
                 color: 'r'
                 points: 100
 
               - type: 'tri'
                 count: 5
                 formation: 'line'
-                movement: 'loopInWait'
+                speed: 100
+                coeff: 6
+                amplitude: 100
+                movement: 'sine'
                 color: 'r'
                 points: 100
 
               - type: 'tri'
                 count: 5
                 formation: 'line'
-                movement: 'loopInWait'
+                speed: 100
+                coeff: 6
+                amplitude: 100
+                movement: 'sine'
                 color: 'g'
                 points: 200
 
