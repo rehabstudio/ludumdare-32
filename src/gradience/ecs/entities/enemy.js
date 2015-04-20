@@ -26,6 +26,33 @@ var Enemy = (function() {
             .start();
     }
 
+    function dieFlash() {
+        this.dying = true;
+        var slit = new Filters.Glitch.SlitScan();
+        slit.rand = 0.1;
+        var shaker = new Filters.Glitch.Shaker();
+        shaker.blurY = 0;
+        shaker.blurX = 0;
+        var convergence = new Filters.Glitch.Convergence();
+        convergence.rand = 0;
+
+        this.filters = [slit, shaker, convergence];
+        this.game.add.tween(this)
+            .to({alpha: 0}, 750)
+            .start();
+        this.game.add.tween(convergence)
+            .to({rand: 1}, 750)
+            .start();
+        this.game.add.tween(slit)
+            .to({rand: 10}, 750)
+            .start();
+        this.game.add.tween(shaker)
+            .to({blurY: 5}, 750)
+            .start()
+            .onComplete.add(function() {
+                this.kill();
+            }, this);
+    }
 
     function create(game, params) {
 
@@ -60,6 +87,7 @@ var Enemy = (function() {
 
         enemy.sprite.filters = [enemy.sprite.glowFilter, enemy.sprite.cutFilter];
         enemy.sprite.shieldFlash = shieldFlash;
+        enemy.sprite.dieFlash = dieFlash;
 
         return enemy;
     }
