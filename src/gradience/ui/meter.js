@@ -22,7 +22,7 @@ module.exports = (function() {
     }
 
     function create(scene, x, y) {
-        if (group === undefined) {
+        if (!group) {
             group = new Phaser.Group(scene);
             group.x = x;
             group.y = y;
@@ -49,9 +49,20 @@ module.exports = (function() {
         });
     }
 
+    function destroy() {
+        group.destroy();
+        group = null;
+    }
+
+    function bringToTop(scene) {
+        scene.bringToTop(group);
+    }
+
     return {
         create: create,
-        update: update
+        update: update,
+        destroy: destroy,
+        bringToTop: bringToTop
     };
 
 })();

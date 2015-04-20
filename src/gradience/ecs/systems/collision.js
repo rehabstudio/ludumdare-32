@@ -29,7 +29,6 @@ var CollisionSystem = (function() {
                 player,
                 enemies,
                 function(p, e) {
-                    console.log('Player hit enemy', p, e);
                     if (!e.dying) { 
                         gameStatus.updateLives(-1);
                     }
@@ -51,7 +50,6 @@ var CollisionSystem = (function() {
                 enemies,
                 function(b, e) {
                     if(b.tint === e.tint) {
-                        console.log('Bullet hit enemy', b, e);
                         game.physics.arcade.collide(b, e);
                         e.dieFlash();
                         gameStatus.updateScore(10);
@@ -72,7 +70,6 @@ var CollisionSystem = (function() {
                 player,
                 powerups,
                 function(p, pu) {
-                    console.log('Player collected power', p, pu);
                     gameStatus.colorMeters[pu.colorKey] += pu.amount;
 
                     if (gameStatus.colorMeters[pu.colorKey] > 100) {
@@ -89,7 +86,6 @@ var CollisionSystem = (function() {
         if (enemies) {
             enemies.forEach(function(enemy) {
                 if (enemy.x < -100 && enemy.alive) {
-                    console.log('Enemy exited screen: ', enemy);
                     enemy.kill();
                 }
             }, this);

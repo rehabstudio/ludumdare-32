@@ -35,7 +35,6 @@ GameOverState.prototype = {
         );
     },
     create: function(){
-        console.log('GAME OVER');
 
         _playGameOverMusic.call(this);
         _displayGameOverText.call(this);

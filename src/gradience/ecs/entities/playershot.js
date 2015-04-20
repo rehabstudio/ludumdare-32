@@ -42,8 +42,14 @@ function getGroup() {
     return bulletGroup;
 }
 
+function clear() {
+    bulletGroup.destroy();
+    bulletGroup = null;
+}
+
 
 module.exports = { 
     create: createPlayerShot,
-    getGroup: getGroup
+    getGroup: getGroup,
+    clear: clear
 };
