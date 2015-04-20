@@ -11,6 +11,7 @@ BootState.prototype = {
         // this.scale.maxHeight = 1080;
     },
     preload: function(){
+        this.game.load.image('star', 'assets/sprites/lazer_hit.png');
     },
     create: function(){
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
