@@ -11,7 +11,7 @@ module.exports = {
 
     font: {
         baseStyle: {
-            font: "24px Arial",
+            font: "24px Iceland",
             fill: "#caa",
             stroke: "#000",
             strokeThickness: 1,

@@ -83,6 +83,14 @@ TitleState.prototype = {
         this.title.scale.set(0.8);
         this.title.alpha = 0;
 
+        // fudge to ensure font is loaded
+        this.add.text(
+            this.game.world.centerX,
+            this.game.world.height - 80,
+            Config.Strings.startText,
+            Config.font.baseStyle
+        ).destroy();
+
         this.game.world.filters = [
             filters.heavyGlow,
             filters.convergence,
@@ -97,19 +105,28 @@ TitleState.prototype = {
         this.add.tween(filters.heavyGlow)
             .to({blur: 10}, 1000, Phaser.Easing.Quadratic.Out)
             .to({blur: 6}, 1000, Phaser.Easing.Quadratic.InOut)
-            .start();
+            .start()
+            .onComplete.add(function() {
+                console.log('test');
+                this.text = this.add.text(
+                    this.game.world.centerX,
+                    this.game.world.height - 80,
+                    Config.Strings.startText,
+                    Config.font.baseStyle
+                );
+                this.text.anchor.set(0.5);
+                this.text.alpha = 0;
+                this.text.y += 40;
+                this.add.tween(this.text)
+                    .to(
+                        {alpha: 1, y: "-40"},
+                        1000,
+                        Phaser.Easing.Quadratic.Out,
+                        true,
+                        3000
+                );
+            }, this);
 
-        this.text = this.add.text(
-            this.game.world.centerX,
-            this.game.world.height - 80,
-            Config.Strings.startText,
-            Config.font.baseStyle
-        );
-        this.text.anchor.set(0.5);
-        this.text.alpha = 0;
-        this.text.y += 40;
-        this.add.tween(this.text)
-            .to({alpha: 1, y: "-40"}, 1000, Phaser.Easing.Quadratic.Out, true, 5000);
 
         glitch.call(this);
     },
