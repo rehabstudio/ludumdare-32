@@ -9,12 +9,14 @@ var TitleState = function() {};
 
 function _waitForStart() {
     if (this.input.keyboard.isDown(Config.Keymap.Start) || this.input.activePointer.isDown) {
-        this.game.state.start('level', true, false, 'assets/levels/tutorial.yaml');
+        this.game.state.start('level', true, false, 'assets/levels/test.yaml');
     }
 }
 
 function _playIntroMusic() {
-    this.intromusic = this.add.audio('intro');
+    this.introsound = this.add.audio('intro');
+    this.introsound.play();
+    this.intromusic = this.add.audio('title_loop', 1, true);
     this.intromusic.play();
 }
 
@@ -26,6 +28,10 @@ TitleState.prototype = {
             'intro',
             ['assets/audio/intro.mp3',
              'assets/audio/intro.opus']
+        );
+        this.load.audio(
+            'title_loop',
+            ['assets/audio/title_loop.mp3']
         );
         this.load.image('title', 'assets/sprites/logo.png');
     },
@@ -113,6 +119,7 @@ TitleState.prototype = {
     render: function() {
     },
     shutdown: function() {
+        this.intromusic.stop();
     }
 };
 
