@@ -1,6 +1,6 @@
 var STRINGS = {
     startText: 'PRESS START',
-    gameOverText: 'GAME OVER. Press SPACE to restart.'
+    gameOverText: 'GAME OVER.'
 };
 
 module.exports = STRINGS;
