@@ -68,6 +68,7 @@ var CollisionSystem = (function() {
                             e.shieldFlash();
                             game.add.audio('fizzle', 0.5).play();
                         }
+                        b.emitter.explode(1000);
                         b.kill();
                     }
                 },
