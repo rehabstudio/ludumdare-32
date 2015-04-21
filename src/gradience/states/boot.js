@@ -8,9 +8,8 @@ BootState.prototype = {
         this.scale.minWidth = 800;
         this.scale.minHeight = 480;
         this.scale.refresh();
-        // do we even want max?
-        // this.scale.maxWidth = 1920;
-        // this.scale.maxHeight = 1080;
+        this.scale.maxWidth = 1000;
+        this.scale.maxHeight = 600;
     },
     preload: function(){
         this.game.load.image('star', 'assets/sprites/lazer_hit.png');

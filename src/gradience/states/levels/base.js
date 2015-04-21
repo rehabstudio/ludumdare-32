@@ -22,11 +22,19 @@ BaseLevel.prototype = {
     preload: function() {
         this.load.image('laser', 'assets/sprites/lazer_beam.png');
         this.load.image('powerup', 'assets/sprites/capsule_large.png');
+        this.load.audio(
+            'music',
+            [
+                'assets/audio/level1.mp3',
+                'assets/audio/level1.opus'
+            ]
+        );
         this.parser.load();
     },
     create: function(a) {
         UI.create(this);
         this.add.audio('intro', 1).play();
+        this.music = this.add.audio('music', 1, true).play();
         this.bells = this.add.audio('bells', 1, true).play();
 
         this.backdrop = new Environment.Backdrop(this.game);
@@ -75,7 +83,6 @@ BaseLevel.prototype = {
 
         this.showDialog(this.parser.level.preDialog || [], function() {
             if (this.flags.sandbox) {
-                console.log('11111111');
                 this.sandboxTimer = this.game.time.create();
                 this.sandboxTimer.loop(2000, this.createRandomWave, this);
                 this.sandboxTimer.start();
@@ -256,13 +263,13 @@ BaseLevel.prototype = {
         }
     },
     createRandomPowerup: function() {
-        if (Math.random() < 0.7) {
+        if (Math.random() < 0.80) {
             return false;
         }
         Entities.Powerup.create(this.game, {asset: 'powerup'});
     },
     createRandomWave: function() {
-        if (Math.random() < 0.9) {
+        if (Math.random() < 0.8) {
             return false;
         }
         var waves = this.parser.level.phases[0].waves;
@@ -306,6 +313,7 @@ BaseLevel.prototype = {
             this.dialogText = null;
         }
         this.bells.stop();
+        this.music.stop();
     }
 };
 
