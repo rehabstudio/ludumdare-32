@@ -1,0 +1,85 @@
+level:
+    name: "Sandbox"
+
+    assets:
+        image: !!pairs
+            - player: assets/sprites/player.png
+            - enemy_tri: assets/sprites/enemy_tri.png
+            - enemy_orb: assets/sprites/enemy_orb.png
+            - enemy_jet: assets/sprites/enemy_jet.png
+            - enemy_kite: assets/sprites/enemy_kite.png
+            - enemy_ship: assets/sprites/enemy_ship.png
+        audio: !!pairs
+            - music:
+                - assets/audio/backing-bell.mp3
+                - assets/audio/backing-bell.opus
+    flags:
+        unlimitedAmmo: false
+        collectibles: true
+        resetHealth: true
+        resetAmmo: true
+        sandbox: true
+
+    preDialog: 
+        - "Sorry I ran out of time to write more levels"
+        - "So here's endless mode!"
+
+    phases:
+        - name: "Phase 1"
+          waves:
+              - type: 'tri'
+                count: 7
+                speed: 200
+                rotate: 5
+                coeff: 6
+                amplitude: 20
+                movement: 'sine'
+              - type: 'tri'
+                count: 12
+                speed: 120
+                rotate: 8
+                coeff: 6
+                amplitude: 60
+                movement: 'sine'
+              - type: 'tri'
+                count: 20
+                speed: 100
+                rotate: 3
+                coeff: 8
+                amplitude: 80
+                movement: 'sine'
+              - type: 'orb'
+                count: 15
+                speed: 200
+                rotate: 5
+                coeff: 10
+                amplitude: 70
+                movement: 'loop'
+              - type: 'orb'
+                count: 20
+                speed: 120
+                rotate: 2
+                coeff: 6
+                amplitude: 30
+                movement: 'loop'
+              - type: 'orb'
+                count: 10
+                speed: 300
+                rotate: 8
+                coeff: 2
+                amplitude: 20
+                movement: 'loop'
+              - type: 'kite'
+                count: 60
+                speed: 300
+                rotate: 0
+                coeff: 10
+                amplitude: 70
+                movement: 'zig'
+              - type: 'jet'
+                count: 40
+                speed: 400
+                rotate: 0
+                coeff: 8
+                amplitude: 50
+                movement: 'zig'

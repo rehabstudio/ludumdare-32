@@ -12,7 +12,9 @@ module.exports = (function() {
     var filter;
 
     function create(scene) {
+        console.log(instance);
         if (!instance) {
+            console.log('hmm', instance);
             instance = scene.add.graphics();
             instance.x = 0;
             instance.y = (

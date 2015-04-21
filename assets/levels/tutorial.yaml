@@ -1,11 +1,15 @@
 level:
     name: "Tutorial"
+    nextLevel: assets/levels/tutorial_2.yaml
 
     assets:
         image: !!pairs
             - player: assets/sprites/player.png
             - enemy_tri: assets/sprites/enemy_tri.png
             - enemy_orb: assets/sprites/enemy_orb.png
+            - enemy_jet: assets/sprites/enemy_jet.png
+            - enemy_kite: assets/sprites/enemy_kite.png
+            - enemy_ship: assets/sprites/enemy_ship.png
         audio: !!pairs
             - music:
                 - assets/audio/level1.mp3
@@ -15,8 +19,9 @@ level:
         collectibles: false
 
     preDialog: 
-        - "Welcome to Gradience, now shut up and learn some stuff"
-        - "The key to this game is colour!"
+        - "Welcome to Gradience"
+        - "You want to learn some stuff? Good."
+        - "The key to this game is colour"
 
     postDialog:
         - "Now you've got the basics, it's time to throw you in the deep end"
@@ -57,7 +62,7 @@ level:
                 count: 5
                 formation: 'line'
                 speed: 100
-                rotate: 15
+                rotate: 10
                 coeff: 6
                 amplitude: 20
                 movement: 'sine'
@@ -99,9 +104,43 @@ level:
                 count: 5
                 formation: 'line'
                 speed: 100
-                rotate: 25
+                rotate: 2
                 coeff: 6
                 amplitude: 20
                 movement: 'sine'
                 color: 'rb'
                 points: 500
+
+        - name: "Phase 3"
+
+          preDialog:
+              - "Combine your lenses and try to kill these guys"
+
+          waves:
+              - type: tri
+                count: 7
+                speed: 200
+                rotate: 5
+                coeff: 8
+                amplitude: 40
+                movement: 'loop'
+                color: 'gb'
+                points: 500
+              - type: orb
+                count: 7
+                speed: 200
+                rotate: 2
+                coeff: 2
+                amplitude: 100
+                movement: 'sine'
+                color: 'b'
+                points: 500
+              - type: orb
+                count: 15
+                speed: 200
+                rotate: 5
+                coeff: 8
+                amplitude: 80
+                movement: 'loop'
+                color: 'rg'
+                points: 800

@@ -1,0 +1,75 @@
+level:
+    name: "Tutorial"
+
+    assets:
+        image: !!pairs
+            - player: assets/sprites/player.png
+            - enemy_tri: assets/sprites/enemy_tri.png
+            - enemy_orb: assets/sprites/enemy_orb.png
+            - enemy_jet: assets/sprites/enemy_jet.png
+            - enemy_kite: assets/sprites/enemy_kite.png
+            - enemy_ship: assets/sprites/enemy_ship.png
+        audio: !!pairs
+            - music:
+                - assets/audio/backing-bell.mp3
+                - assets/audio/backing-bell.opus
+    flags:
+        unlimitedAmmo: false
+        collectibles: true
+
+    preDialog: 
+        - "Too Easy?"
+        - "That's because you had unlimited ammo..."
+
+    postDialog:
+        - "Not bad, you'll become a color jockey yet"
+
+    phases:
+        - name: "Phase 1"
+
+          postDialog:
+              - "Collect canisters to refill your color gauges"
+
+          waves:
+              - type: 'orb'
+                count: 20
+                speed: 200
+                rotate: 5
+                coeff: 3
+                amplitude: 60
+                movement: 'loop'
+                color: 'b'
+
+              - type: 'tri'
+                count: 40
+                speed: 50
+                rotate: 3
+                coeff: 4
+                amplitude: 20
+                movement: 'sine'
+                color: 'gb'
+
+        - name: "Phase 2"
+
+          preDialog: 
+              - "Don't waste ammo needlessly"
+
+          waves:
+              - type: 'tri'
+                count: 25
+                speed: 100
+                rotate: 5
+                coeff: 6
+                amplitude: 20
+                movement: 'sine'
+                color: 'rg'
+
+              - type: 'kite'
+                count: 20
+                formation: 'line'
+                speed: 100
+                rotate: 0
+                coeff: 9
+                amplitude: 100
+                movement: 'zig'
+                color: 'rb'

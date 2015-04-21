@@ -1,0 +1,55 @@
+level:
+    name: "Sandbox"
+    nextLeve: assets/levels/level_sandbox.yaml
+    assets:
+        image: !!pairs
+            - player: assets/sprites/player.png
+            - enemy_tri: assets/sprites/enemy_tri.png
+            - enemy_orb: assets/sprites/enemy_orb.png
+            - enemy_jet: assets/sprites/enemy_jet.png
+            - enemy_kite: assets/sprites/enemy_kite.png
+            - enemy_ship: assets/sprites/enemy_ship.png
+        audio: !!pairs
+            - music:
+                - assets/audio/backing-bell.mp3
+                - assets/audio/backing-bell.opus
+    flags:
+        unlimitedAmmo: false
+        collectibles: true
+        resetAmmo: true
+        resetHealth: false
+        resetScore: false
+
+    preDialog: 
+        - "LEVEL 3"
+
+    postDialog:
+        - "MISSON COMPLETE"
+
+    phases:
+        - name: "Phase 1"
+          waves:
+              - type: 'orb'
+                count: 100
+                speed: 100
+                rotate: 5
+                coeff: 10
+                amplitude: 60
+                color: 'rg'
+                movement: 'loop'
+              - type: 'orb'
+                count: 100
+                speed: 100
+                rotate: 5
+                coeff: 10
+                amplitude: 60
+                color: 'gb'
+                movement: 'loop'
+              - type: 'kite'
+                count: 50
+                speed: 100
+                rotate: 0
+                coeff: 4
+                amplitude: 20
+                color: 'g'
+                movement: 'zig'

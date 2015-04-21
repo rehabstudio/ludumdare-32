@@ -1,6 +1,7 @@
 'use strict';
 
 var Status = require('../../status');
+var BaseLevel = require('../../states/levels/base');
 var Config = require('../../config');
 var Factory = require('../../ecs/factory');
 var Systems = require('../../ecs/systems');
@@ -20,11 +21,11 @@ BaseLevel.prototype = {
     },
     preload: function() {
         this.load.image('laser', 'assets/sprites/lazer_beam.png');
+        this.load.image('powerup', 'assets/sprites/capsule_large.png');
         this.parser.load();
     },
     create: function(a) {
         UI.create(this);
-        Status.Game.lives = 3;
         this.add.audio('intro', 1).play();
         this.bells = this.add.audio('bells', 1, true).play();
 
@@ -50,12 +51,42 @@ BaseLevel.prototype = {
             this.flags[key ] = this.parser.level.flags[key];
         }
 
+        if (this.flags.resetAmmo) {
+            Status.Game.colorMeters.r = 100;
+            Status.Game.colorMeters.g = 100;
+            Status.Game.colorMeters.b = 100;
+        }
+
+        if (this.flags.resetHealth) {
+            Status.Game.lives = 3;
+        }
+
+        if (this.flags.resetScore) {
+            Status.Game.score = 0;
+        }
+
+        if (this.flags.collectibles) {
+            this.powerupTimer = this.game.time.create();
+            this.powerupTimer.loop(1000, this.createRandomPowerup, this);
+            this.powerupTimer.start();
+        }
+
         this.createPlayer();
 
         this.showDialog(this.parser.level.preDialog || [], function() {
-            this.startPhase(this.parser.level.phases.slice(), function() {
-                this.endLevel();
-            }, this);
+            if (this.flags.sandbox) {
+                console.log('11111111');
+                this.sandboxTimer = this.game.time.create();
+                this.sandboxTimer.loop(2000, this.createRandomWave, this);
+                this.sandboxTimer.start();
+                this.createRandomWave();
+            }
+
+            else {
+                this.startPhase(this.parser.level.phases.slice(), function() {
+                    this.endLevel();
+                }, this);
+            }
         }, this);
 
         Systems.Controls.pause(false);
@@ -134,7 +165,7 @@ BaseLevel.prototype = {
                 this.onWaveCreated.dispatch();
             },
             this
-    );
+        );
     },
     createPlayer: function() {
         this.player = Entities.Player.create(this);
@@ -151,8 +182,8 @@ BaseLevel.prototype = {
     exitPlayer: function() {
         this.player.sprite.body.enable = false;
         this.add.tween(this.player.sprite)
-            .to({x: this.player.sprite.x - 150}, 1000, Phaser.Easing.Quadratic.InOut)
-            .to({x: this.game.width + 600}, 2000, Phaser.Easing.Quadratic.In)
+            .to({x: this.player.sprite.x - 80}, 1000, Phaser.Easing.Quadratic.InOut)
+            .to({x: this.game.width + 300}, 2000, Phaser.Easing.Quadratic.In)
             .start();
     },
     showDialog: function(dialog, callback, context) {
@@ -179,16 +210,16 @@ BaseLevel.prototype = {
         this.dialogText.alpha = 0;
         this.dialogText.filters = [this.shaker, this.slitScan];
         this.add.tween(this.dialogText)
-            .to({alpha: 1}, 1000, Phaser.Easing.Linear.None, false, 1000)
-            .to({alpha: 0}, 1000, Phaser.Easing.Linear.None, false, 1000)
+            .to({alpha: 1}, 600, Phaser.Easing.Linear.None, false, 600)
+            .to({alpha: 0}, 600, Phaser.Easing.Linear.None, false, 2000)
             .start();
         this.add.tween(this.slitScan)
-            .to({rand: 0.1}, 1000, Phaser.Easing.Linear.None, false, 1000)
-            .to({rand: 15}, 1000, Phaser.Easing.Linear.None, false, 1000)
+            .to({rand: 0.1}, 600, Phaser.Easing.Linear.None, false, 600)
+            .to({rand: 15}, 600, Phaser.Easing.Linear.None, false, 2000)
             .start();
         this.add.tween(this.shaker)
-            .to({blurY: 0}, 1000, Phaser.Easing.Linear.None, false, 1000)
-            .to({blurY: 5}, 1000, Phaser.Easing.Linear.None, false, 1000)
+            .to({blurY: 0}, 600, Phaser.Easing.Linear.None, false, 600)
+            .to({blurY: 5}, 600, Phaser.Easing.Linear.None, false, 2000)
             .start()
             .onComplete.add(function(){
                 this.showDialog(dialog.slice(1), callback, context);
@@ -224,10 +255,48 @@ BaseLevel.prototype = {
             });
         }
     },
+    createRandomPowerup: function() {
+        if (Math.random() < 0.7) {
+            return false;
+        }
+        Entities.Powerup.create(this.game, {asset: 'powerup'});
+    },
+    createRandomWave: function() {
+        if (Math.random() < 0.9) {
+            return false;
+        }
+        var waves = this.parser.level.phases[0].waves;
+        var wave = Phaser.ArrayUtils.getRandomItem(waves);
+        Entities.Enemy.createWave(
+            this,
+            {
+                count: wave.count,
+                delay: 250,
+                x: 900,
+                y: this.game.world.centerY,
+                rotate: wave.rotate,
+                movement: wave.movement,
+                speed: wave.speed,
+                coeff: wave.coeff,
+                amplitude: wave.amplitude,
+                asset: 'enemy_' + wave.type,
+                color: Config.gameColors[
+                    Phaser.ArrayUtils.getRandomItem([
+                        'r', 'g', 'b', 'rg', 'gb', 'rb'
+                    ])
+                ].substr(1)
+            },
+            function() {
+            },
+            this
+        );
+    },
     render: function() {
 
     },
     shutdown: function() {
+        this.game.state.remove('level');
+        this.game.state.add('level', BaseLevel);
         Factory.clear();
         Entities.Enemy.clear();
         Entities.PlayerShot.clear();
