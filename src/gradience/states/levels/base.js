@@ -19,6 +19,7 @@ BaseLevel.prototype = {
         this.parser = new Config.LevelParser(this, levelConfig);
     },
     preload: function() {
+        this.load.image('laser', 'assets/sprites/lazer_beam.png');
         this.parser.load();
     },
     create: function(a) {
@@ -199,6 +200,8 @@ BaseLevel.prototype = {
         Systems.Movement.update(Factory.getAll());
         Systems.Collision.update(Factory.getAll());
 
+
+
         var enemies = Entities.Enemy.getGroup();
 
         if (enemies && enemies.countLiving() == 0) {
@@ -213,6 +216,13 @@ BaseLevel.prototype = {
 
         UI.bringToTop(this.game.world);
         UI.update();
+
+        if (Entities.PlayerShot.getGroup()) {
+            Entities.PlayerShot.getGroup().forEach(function(shot){
+                shot.emitter.x = shot.x;
+                shot.emitter.y = shot.y;
+            });
+        }
     },
     render: function() {
 

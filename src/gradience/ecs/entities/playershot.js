@@ -8,31 +8,32 @@ var c = document.createElement('canvas'),
 c.width = 32;
 c.height = 4;
 
-function _createShotImage() {
-    ctx.fillStyle = '#ffffff'; 
-    ctx.fillRect(0, 0, c.width, c.height);
-
-    var cimg = new Image;
-    cimg.src = c.toDataURL('image/png');
-    return cimg;
-}
-
-var shotImg, bulletGroup;
+var bulletGroup;
 
 function createPlayerShot(game, x, y) {
 
-    if(!shotImg) {
-        shotImg = _createShotImage();
-        game.cache.addImage('playershot', null, shotImg);
+    if(!bulletGroup) {
+        bulletGroup = game.add.group();
     }
 
-    if(!bulletGroup) bulletGroup = game.add.group();
-
     var playerShot = factory.create([
-        ['Sprite', {game: game, x: x, y: y, asset: 'playershot', group: bulletGroup}],
+        ['Sprite', {game: game, x: x, y: y + 7, asset: 'laser', group: bulletGroup}],
         ['Physics', game],
-        ['Velocity', {x: 600, y: 0 }],
+        ['Velocity', {x: 800, y: 0 }],
     ]);
+    playerShot.sprite.scale.x = 2;
+    playerShot.sprite.emitter = game.add.emitter(x, y, 20);
+    playerShot.sprite.emitter.makeParticles('star');
+    playerShot.sprite.emitter.setRotation(0, 0);
+    playerShot.sprite.emitter.setAlpha(0.3, 0.7);
+    playerShot.sprite.emitter.setScale(0.1, 0.5);
+    playerShot.sprite.emitter.setYSpeed(-20, 20);
+    playerShot.sprite.emitter.setXSpeed(0, 100);
+    playerShot.sprite.emitter.gravity = 0;
+    playerShot.sprite.emitter.forEach(function(particle){
+        particle.tint = gameStatus.activeTintColor;
+    });
+    playerShot.sprite.emitter.start(false, 1000, 50, 100);
 
     playerShot.sprite.tint = gameStatus.activeTintColor;
     game.add.audio('laser_shot', 0.5).play();
