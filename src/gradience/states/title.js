@@ -90,13 +90,6 @@ TitleState.prototype = {
             ]
         );
         this.load.audio(
-            'bells',
-            [
-                'assets/audio/level1.mp3',
-                'assets/audio/level1.opus'
-            ]
-        );
-        this.load.audio(
             'gameover',
             [
                 'assets/audio/game-over.mp3',
