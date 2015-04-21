@@ -60,6 +60,7 @@ function showMenu() {
         .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1200);
     this.add.tween(buttons.sandbox)
         .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1400);
+    this.addFlavourText();
 }
 
 function _waitForStart() {
@@ -171,7 +172,7 @@ TitleState.prototype = {
                 }
                 this.text = this.add.text(
                     this.game.world.centerX,
-                    this.game.world.height - 80,
+                    this.game.world.height - 100,
                     Config.Strings.startText,
                     Config.font.baseStyle
                 );
@@ -185,7 +186,7 @@ TitleState.prototype = {
                         Phaser.Easing.Quadratic.Out,
                         true,
                         3000
-                );
+                    );
             }, this);
 
 
@@ -200,6 +201,20 @@ TitleState.prototype = {
     },
     shutdown: function() {
         this.intromusic.stop();
+    },
+    addFlavourText: function() {
+        var flavour = this.add.group();
+        var hi = this.add.text(0, 0, 'HI 000567800', Config.font.baseStyle);
+        hi.y = 5;
+        hi.x = this.game.width - hi.width - 5;
+        flavour.add(hi);
+        var credit = this.add.text(0, 0, 'CREDIT 01', Config.font.baseStyle);
+        credit.y = this.game.height - credit.height - 5;
+        credit.x = this.game.width - credit.width - 5;
+        flavour.add(hi);
+        flavour.add(credit);
+        flavour.alpha = 0;
+        this.add.tween(flavour).to({alpha: 0.5}, 1000).start();
     }
 };
 
