@@ -35,10 +35,16 @@ var Powerup = (function() {
         ]);
 
         powerup.sprite.amount = 40;
-        powerup.sprite.colorKey = config.gameColorKeys[Math.floor(Math.random() * 3)];
-        powerup.sprite.tint = Phaser.Color.hexToRGB(
-            config.gameColors[powerup.sprite.colorKey]
-        );
+        powerup.sprite.colorKey = Phaser.ArrayUtils.getRandomItem(['r', 'g', 'b']);
+        if (powerup.sprite.colorKey == 'g') {
+            powerup.sprite.tint = 0x00FF00;
+        }
+
+        else {
+            powerup.sprite.tint = Phaser.Color.hexToRGB(
+                config.gameColors[powerup.sprite.colorKey].substr(1)
+            );
+        }
 
         return powerup;
     }

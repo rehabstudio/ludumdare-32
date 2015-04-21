@@ -1,6 +1,7 @@
 'use strict';
 
 var Config = require('../config');
+var Status = require('../status');
 var Environment = require('../environ');
 
 
@@ -42,7 +43,7 @@ function showMenu() {
     var buttons = {
         tutorial: makeButton(this, "TUTORIAL", goTutorial, this),
         normal: makeButton(this, "NORMAL", goNormal, this),
-        sandbox: makeButton(this, "SANDBOX", goSandbox, this)
+        sandbox: makeButton(this, "ENDLESS", goSandbox, this)
     };
     buttons.tutorial.x = buttons.normal.x = buttons.sandbox.x = 900;
     buttons.tutorial.y = 110;
