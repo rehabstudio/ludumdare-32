@@ -8,8 +8,8 @@ level:
             - enemy_orb: assets/sprites/enemy_orb.png
         audio: !!pairs
             - music:
-                - assets/audio/backing-bell.mp3
-                - assets/audio/backing-bell.opus
+                - assets/audio/level1.mp3
+                - assets/audio/level1.opus
     flags:
         unlimitedAmmo: true
         collectibles: false

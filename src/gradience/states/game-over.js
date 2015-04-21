@@ -14,7 +14,7 @@ function _waitForStart() {
 
 function _playIntroMusic() {
     this.add.audio('intro').play();
-    this.bells = this.add.audio('bells', 5, true).play();
+    this.gameover = this.add.audio('gameover', 1, false).play();
 }
 
 TitleState.prototype = {
@@ -83,7 +83,7 @@ TitleState.prototype = {
     render: function() {
     },
     shutdown: function() {
-        this.bells.stop();
+        this.gameover.stop();
         this.game.stopGlitch();
     }
 };

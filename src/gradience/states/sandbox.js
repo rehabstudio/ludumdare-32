@@ -26,8 +26,8 @@ Sandbox.prototype = {
         this.load.audio(
             'music',
             [
-                'assets/audio/backing-bell.mp3',
-                'assets/audio/backing-bell.opus'
+                'assets/audio/level1.mp3',
+                'assets/audio/level1.opus'
             ]
         );
     },
@@ -122,6 +122,7 @@ Sandbox.prototype = {
 
     },
     shutdown: function() {
+        this.music.stop();
     }
 };
 
