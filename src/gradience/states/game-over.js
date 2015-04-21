@@ -14,7 +14,7 @@ function _waitForStart() {
 
 function _playIntroMusic() {
     this.add.audio('intro').play();
-    this.gameover = this.add.audio('gameover', 1, true).play();
+    this.gameover = this.add.audio('gameover', 1, false).play();
 }
 
 TitleState.prototype = {
