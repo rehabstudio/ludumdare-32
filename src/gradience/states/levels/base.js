@@ -22,20 +22,12 @@ BaseLevel.prototype = {
     preload: function() {
         this.load.image('laser', 'assets/sprites/lazer_beam.png');
         this.load.image('powerup', 'assets/sprites/capsule_large.png');
-        this.load.audio(
-            'music',
-            [
-                'assets/audio/level1.mp3',
-                'assets/audio/level1.opus'
-            ]
-        );
         this.parser.load();
     },
     create: function(a) {
         UI.create(this);
         this.add.audio('intro', 1).play();
         this.music = this.add.audio('music', 1, true).play();
-        this.bells = this.add.audio('bells', 1, true).play();
 
         this.backdrop = new Environment.Backdrop(this.game);
 
