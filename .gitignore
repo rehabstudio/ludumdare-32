@@ -1,6 +1,5 @@
 # Local additions
 
-dist/
 .dockerbuild
 
 # Created by https://www.gitignore.io
