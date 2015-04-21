@@ -96,6 +96,13 @@ TitleState.prototype = {
             ]
         );
         this.load.audio(
+            'gameover',
+            [
+                'assets/audio/game-over.mp3',
+                'assets/audio/game-over.opus'
+            ]
+        );
+        this.load.audio(
             'title_loop',
             [
                 'assets/audio/title_loop.mp3',
