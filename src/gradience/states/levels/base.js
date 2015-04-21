@@ -35,7 +35,6 @@ BaseLevel.prototype = {
         UI.create(this);
         this.add.audio('intro', 1).play();
         this.music = this.add.audio('music', 1, true).play();
-        this.bells = this.add.audio('bells', 1, true).play();
 
         this.backdrop = new Environment.Backdrop(this.game);
 
