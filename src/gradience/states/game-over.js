@@ -14,7 +14,7 @@ function _waitForStart() {
 
 function _playIntroMusic() {
     this.add.audio('intro').play();
-    this.bells = this.add.audio('bells', 5, true).play();
+    this.bells = this.add.audio('bells', 1, true).play();
 }
 
 TitleState.prototype = {

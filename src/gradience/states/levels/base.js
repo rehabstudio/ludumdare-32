@@ -25,7 +25,7 @@ BaseLevel.prototype = {
         UI.create(this);
         Status.Game.lives = 3;
         this.add.audio('intro', 1).play();
-        this.bells = this.add.audio('bells', 10, true).play();
+        this.bells = this.add.audio('bells', 1, true).play();
 
         this.backdrop = new Environment.Backdrop(this.game);
 

@@ -122,6 +122,7 @@ Sandbox.prototype = {
 
     },
     shutdown: function() {
+        this.music.stop();
     }
 };
 
