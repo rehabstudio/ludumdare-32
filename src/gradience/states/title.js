@@ -35,6 +35,32 @@ function makeButton(scene, text, callback, context){
     return group;
 }
 
+function makeScroller(scene) {
+    var scrollText = Config.Strings.titleScroller.join('      ');
+    console.log(scrollText);
+
+    this.scroller = this.add.text(
+        this.game.world.width - 10,
+        this.game.world.height - 50,
+        scrollText,
+        Config.font.scrollStyle
+    );
+    this.scroller.anchor.set(0, 0.5);
+
+    var scrollTime = 50 * scrollText.length,
+        scrollDist = -1 * (this.scroller.width + this.game.world.width);
+
+    this.add.tween(this.scroller)
+        .to(
+            { x: scrollDist },
+            scrollTime,
+            Phaser.Easing.Linear.InOut,
+            true
+        )
+        .loop();
+
+}
+
 function showMenu() {
     if (this.menuOpen) {
         return;
@@ -50,18 +76,17 @@ function showMenu() {
     buttons.normal.y = 210;
     buttons.sandbox.y = 310;
     if (this.text) {
-        this.add.tween(this.text)
-            .to({alpha: 0}, 500, Phaser.Easing.Quadratic.In, true);
+        this.game.time.events.remove(this.textFlash);
+        this.text.alpha = 0;
     }
     this.add.tween(this.title)
         .to({x: 300}, 1000, Phaser.Easing.Quadratic.Out, true);
     this.add.tween(buttons.tutorial)
-        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1000);
+        .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1000);
     this.add.tween(buttons.normal)
-        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1200);
+        .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1200);
     this.add.tween(buttons.sandbox)
-        .to({x: 600}, 800, Phaser.Easing.Quadratic.Out, true, 1400);
-    this.addFlavourText();
+        .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1400);
 }
 
 function _waitForStart() {
@@ -178,25 +203,29 @@ TitleState.prototype = {
                 if (this.menuOpen) {
                     return;
                 }
+
+                // add scroll text
+                makeScroller.call(this);
+
+                // add hiscore and credit (dummy)
+                this.addFlavourText();
+
+                // add 'Press Start' text
                 this.text = this.add.text(
                     this.game.world.centerX,
-                    this.game.world.height - 100,
+                    this.game.world.centerY + 120,
                     Config.Strings.startText,
                     Config.font.baseStyle
                 );
                 this.text.anchor.set(0.5);
-                this.text.alpha = 0;
-                this.text.y += 40;
-                this.add.tween(this.text)
-                    .to(
-                        {alpha: 1, y: "-40"},
-                        1000,
-                        Phaser.Easing.Quadratic.Out,
-                        true,
-                        3000
-                    );
+
+                this.textFlash = this.game.time.events.loop(500, function() {
+                    this.text.alpha = !this.text.alpha;
+                }, this);
+                
             }, this);
 
+        
 
         this.game.enableFilters();
 
@@ -212,17 +241,23 @@ TitleState.prototype = {
     },
     addFlavourText: function() {
         var flavour = this.add.group();
+
         var hi = this.add.text(0, 0, 'HI 000567800', Config.font.baseStyle);
-        hi.y = 5;
-        hi.x = this.game.width - hi.width - 5;
+        hi.y = 0;
+        hi.x = this.game.world.centerX;
+        hi.anchor.set(0.5, 0);
+
         flavour.add(hi);
         var credit = this.add.text(0, 0, 'CREDIT 01', Config.font.baseStyle);
-        credit.y = this.game.height - credit.height - 5;
-        credit.x = this.game.width - credit.width - 5;
+        credit.y = this.game.height - 1;
+        credit.x = this.game.width - 1;
+        credit.anchor.set(1,1);
+
         flavour.add(hi);
         flavour.add(credit);
         flavour.alpha = 0;
-        this.add.tween(flavour).to({alpha: 0.5}, 1000).start();
+        
+        this.add.tween(flavour).to({alpha: 0.5}, 500).start();
     }
 };
 

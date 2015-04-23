@@ -16,6 +16,12 @@ module.exports = {
             stroke: "#000",
             strokeThickness: 1,
             align: "center"
+        },
+        scrollStyle: {
+            font: "16px Iceland",
+            fill: "#aca",
+            stroke: "#000",
+            strokeThickness: 1,
         }
     },
 
