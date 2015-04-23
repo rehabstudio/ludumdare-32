@@ -1,6 +1,28 @@
 var STRINGS = {
     startText: 'PRESS START',
-    gameOverText: 'GAME OVER.'
+    gameOverText: 'GAME OVER.',
+
+    titleScroller: [
+        '.....TEAM REHAB PRESENTS....',
+        '.:.   G  R  A  D  I  E  N  C  E   .:.',
+        '(C) 2015 TEAM REHAB',
+        'PRODUCED FOR LUDUMDARE 32 - "AN UNCONVENTIONAL WEAPON".',
+        'BLAST OFF AND TAKE ON THE COLOR-CODED FORCES OF EVIL.',
+        'COMBINE YOUR RGB LASERS AND WATCH YOUR AMMO.',
+        'HAPPY HUNTING!',
+        'TEAM REHAB ARE...',
+        '@CLAIREDOTW - CODE, GAME LOGIC',
+        '@GRIEVE - CODE, GAME LOGIC, VFX',
+        '@NJMCODE - CODE, TITLE THEME',
+        '@PETEMCCONNELL_ - ART & DESIGN',
+        '@STEALTHII - SFX, IN-GAME THEME',
+        'CHECK OUT THE CODE AT GITHUB.COM/REHABSTUDIO/LUDUMDARE-32'/*,
+        '...PULL REQUESTS AND ISSUES WELCOME!',
+        '...GREETZ TO THE BEAUTIFUL PEOPLE AT @REHABSTUDIO AND THE LUDUM DARE COMMUNITY IN GENERAL...',
+        'THIS SCROLLER HAS GONE ON TOO LONG, LOLZ',
+        '...ENJOY THE GAME!'*/
+    ]
+        
 };
 
 module.exports = STRINGS;

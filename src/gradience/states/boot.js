@@ -43,7 +43,7 @@ BootState.prototype = {
                 .to({rand: 0.15}, 10, Phaser.Easing.Linear.None, false, 100)
                 .start()
                 .onComplete.add(function() {
-                    console.log(this);
+                    //console.log(this);
                     if (!this.isGlitching) {
                         return;
                     }
