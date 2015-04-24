@@ -81,12 +81,44 @@ function showMenu() {
     }
     this.add.tween(this.title)
         .to({x: 300}, 1000, Phaser.Easing.Quadratic.Out, true);
+    this.add.tween(this.sinballs)
+        .to({x: -100}, 1000, Phaser.Easing.Quadratic.Out, true);
     this.add.tween(buttons.tutorial)
         .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1000);
     this.add.tween(buttons.normal)
         .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1200);
     this.add.tween(buttons.sandbox)
         .to({x: 550}, 800, Phaser.Easing.Quadratic.Out, true, 1400);
+}
+
+function makeSinusoids() {
+    this.sinballs = this.add.group();
+    this.sinballs.x = 0;
+    this.sinballs.y = 0;
+
+    for(var i = 0; i < Config.titleSines.numBalls; i++) {
+        var s = this.game.add.sprite(
+            0,
+            0,
+            'lazerhit'
+        );
+        s.anchor.set(0.5);
+        s.alpha = 0.6;
+        this.sinballs.add(s);
+    }
+
+    this.sinballs.y = -10;
+
+    this.sinballChange = this.game.time.events.loop(3000, function() {
+        var rndColor = Config.gameColors[
+            Phaser.ArrayUtils.getRandomItem([
+                'r', 'g', 'b', 'rg', 'gb', 'rb'
+            ])];
+
+        this.sinballs.forEach(function(ball) {
+            ball.tint = parseInt(rndColor.substr(1), 16);
+        }, this);
+    }, this);
 }
 
 function _waitForStart() {
@@ -165,6 +197,7 @@ TitleState.prototype = {
         );
         this.load.image('title', 'assets/sprites/logo.png');
         this.load.image('button', 'assets/sprites/button_back.png');
+        this.load.image('lazerhit', 'assets/sprites/lazer_hit.png');
     },
     create: function() {
 
@@ -204,6 +237,9 @@ TitleState.prototype = {
                     return;
                 }
 
+                // add sinusoids
+                makeSinusoids.call(this);
+
                 // add scroll text
                 makeScroller.call(this);
 
@@ -232,6 +268,23 @@ TitleState.prototype = {
         this.game.startGlitch();
     },
     update: function() {
+        if(! this.sinballs) return;
+
+        var t = 0.0001 * Date.now(), i = 0;
+
+        this.sinballs.forEach(function(b) {
+            var ofs = (i / Config.titleSines.numBalls);
+
+            var xs = Math.sin(t * 10) * Config.titleSines.xradius;
+
+            b.x = this.game.world.centerX + Math.floor(
+                Math.sin((t + ofs) * Config.titleSines.xspeed) * xs);
+            b.y = this.game.world.centerY + Math.floor(
+                Math.cos((t + ofs) * Config.titleSines.yspeed) * Config.titleSines.yradius);
+
+            i++;
+        }, this);
+
         _waitForStart.call(this);
     },
     render: function() {

@@ -36,7 +36,15 @@ module.exports = {
 
     inactiveColor: '#444',
 
-    gameColorKeys: ['r', 'g', 'b']
+    gameColorKeys: ['r', 'g', 'b'],
+
+    titleSines: {
+        numBalls: 7,
+        xspeed: 50,
+        yspeed: 27,
+        xradius: 200,
+        yradius: 80
+    }
 
 
 };
