@@ -3,17 +3,18 @@ MAINTAINER Ryan Grieve <ryan@rehabstudio.com>
 
 RUN npm install -g webpack
 RUN npm install -g webpack-dev-server
+RUN apt-get update && apt-get install -y nginx
 
-WORKDIR /app
+WORKDIR /usr/share/nginx/www
 
 # Install application dependencies and copy source into container
-COPY package.json /app/
+COPY package.json /usr/share/nginx/www/
 RUN npm install
-COPY . /app
+COPY . /usr/share/nginx/www
 
 # build the application
 RUN webpack -d --progress --colors
 
-EXPOSE 8080
+EXPOSE 80
 
-CMD [ "python", "-m", "SimpleHTTPServer", "8080" ]
+CMD ["nginx", "-g", "daemon off; error_log stderr info;"]
