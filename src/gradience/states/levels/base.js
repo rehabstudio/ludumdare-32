@@ -304,8 +304,8 @@ BaseLevel.prototype = {
             this.dialogText.destroy();
             this.dialogText = null;
         }
-        this.bells.stop();
-        this.music.stop();
+        if (this.bells) this.bells.stop();
+        if (this.music) this.music.stop();
     }
 };
 

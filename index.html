@@ -14,9 +14,33 @@
             padding: 0;
             background: #111;
             color: white;
+            font-family: Iceland,monospace;
+            text-align: center;
+        }
+        header {
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #222 linear-gradient(transparent,#050507);
+        }
+        header img {
+            height: 80px;
         }
         canvas {
-            margin: 0 auto;
+            margin: 120px auto 0;
+            padding: 5px;
+            border: 5px solid #222;
+            border-radius: 10px;
+            box-shadow: 0 0 20px 10px #112;
+            background: black;
+        }
+        footer {
+            margin-top: 20px;
+            color: #444;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -33,5 +57,15 @@
         charset="utf-8"
     >
     </script>	
+
+    <header>
+        <img src="assets/sprites/logo.png" />
+    </header>
+
+    <div id="main"></div>
+
+    <footer>
+        &copy; 2015 TEAM REHAB. WASD - MOVE SHIP.  JKL - TOGGLE LENSES.  SPACE - FIRE.
+    </footer>
 </body>
 </html>

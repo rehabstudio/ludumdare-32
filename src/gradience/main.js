@@ -8,7 +8,7 @@ var States = {
 };
 
 var Gradience = function(){
-    var game = new Phaser.Game(800, 480, Phaser.AUTO);
+    var game = new Phaser.Game(800, 480, Phaser.AUTO, 'main');
 
     game.state.add('boot', States.Boot);
     game.state.add('title', States.Title);
@@ -20,4 +20,4 @@ var Gradience = function(){
     game.state.start('boot');
 };
 
-module.exports = Gradience
+module.exports = Gradience;
