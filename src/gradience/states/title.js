@@ -139,6 +139,14 @@ TitleState.prototype = {
     init: function() {
     },
     preload: function() {
+        this.loadText = this.add.text(
+            this.game.world.centerX,
+            this.game.world.centerY,
+            Config.Strings.loading,
+            Config.font.baseStyle
+        );
+        this.loadText.anchor.set(0.5);
+
         this.load.audio(
             'intro',
             [
@@ -200,6 +208,8 @@ TitleState.prototype = {
         this.load.image('lazerhit', 'assets/sprites/lazer_hit.png');
     },
     create: function() {
+
+        if(this.loadText) this.loadText.destroy();
 
         _playIntroMusic.call(this);
 
