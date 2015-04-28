@@ -1,4 +1,5 @@
 var STRINGS = {
+    loading: 'LOADING...',
     startText: 'PRESS START',
     gameOverText: 'GAME OVER.',
 

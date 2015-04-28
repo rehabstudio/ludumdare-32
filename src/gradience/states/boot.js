@@ -1,4 +1,5 @@
-var Filters = require('../filters');
+var Filters = require('../filters'),
+    Config = require('../config');
 
 var BootState = function(){};
 
@@ -12,6 +13,22 @@ BootState.prototype = {
         this.scale.maxHeight = 600;
     },
     preload: function(){
+        // fudge to ensure font is loaded
+        this.add.text(
+            this.game.world.centerX,
+            this.game.world.centerY,
+            Config.Strings.loading,
+            Config.font.baseStyle
+        ).destroy();
+
+        this.loadText = this.add.text(
+            this.game.world.centerX,
+            this.game.world.centerY,
+            Config.Strings.loading,
+            Config.font.baseStyle
+        );
+        this.loadText.anchor.set(0.5);
+
         this.game.load.image('star', 'assets/sprites/lazer_hit.png');
     },
     create: function(){
