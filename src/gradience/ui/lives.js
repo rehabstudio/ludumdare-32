@@ -9,16 +9,18 @@ module.exports = (function() {
     var instance;
     var lives;
 
+    var SPRITE_SCALE = 0.4
+
     function create(scene) {
         if (!instance) {
             lives = [];
             instance = scene.add.group();
             lives[0] = scene.add.sprite(0, 0, 'player', 0, instance);
-            lives[0].scale.set(0.7);
+            lives[0].scale.set(SPRITE_SCALE);
             lives[1] = scene.add.sprite(30, 0, 'player', 0, instance);
-            lives[1].scale.set(0.7);
+            lives[1].scale.set(SPRITE_SCALE);
             lives[2] = scene.add.sprite(60, 0, 'player', 0, instance);
-            lives[2].scale.set(0.7);
+            lives[2].scale.set(SPRITE_SCALE);
             instance.x = 5;
             instance.y = 5;
         }
